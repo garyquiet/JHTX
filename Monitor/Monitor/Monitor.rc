@@ -78,6 +78,7 @@ CAPTION "Monitor"
 FONT 9, "MS Shell Dlg"
 BEGIN
     LTEXT           "TODO: 在此放置对话框控件。",IDC_STATIC,13,33,112,17
+    PUSHBUTTON      "Button2",IDC_BUTTON2,22,58,50,14
 END
 
 
