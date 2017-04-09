@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Monitor", "Monitor\Monitor.vcproj", "{F10D689E-E784-47B4-B082-DDB9163E8199}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|MyEmulator (ARMV4I) = Debug|MyEmulator (ARMV4I)
+		Release|MyEmulator (ARMV4I) = Release|MyEmulator (ARMV4I)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Debug|MyEmulator (ARMV4I).ActiveCfg = Debug|MyEmulator (ARMV4I)
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Debug|MyEmulator (ARMV4I).Build.0 = Debug|MyEmulator (ARMV4I)
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Debug|MyEmulator (ARMV4I).Deploy.0 = Debug|MyEmulator (ARMV4I)
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Release|MyEmulator (ARMV4I).ActiveCfg = Release|MyEmulator (ARMV4I)
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Release|MyEmulator (ARMV4I).Build.0 = Release|MyEmulator (ARMV4I)
+		{F10D689E-E784-47B4-B082-DDB9163E8199}.Release|MyEmulator (ARMV4I).Deploy.0 = Release|MyEmulator (ARMV4I)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
