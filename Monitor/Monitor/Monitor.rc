@@ -71,14 +71,23 @@ IDR_MAINFRAME           ICON                    "res\\Monitor.ico"
 // Dialog
 //
 
-IDD_MONITOR_DIALOG DIALOG  0, 0, 130, 90
+IDD_MONITOR_DIALOG DIALOG  0, 0, 150, 250
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW | 0x80000000L
 CAPTION "Monitor"
 FONT 9, "MS Shell Dlg"
 BEGIN
-    LTEXT           "TODO: 在此放置对话框控件。",IDC_STATIC,13,33,112,17
-    PUSHBUTTON      "Button2",IDC_BUTTON2,22,58,50,14
+    PUSHBUTTON      "预置信息",IDC_PRESET_INFO_BUTTON,9,32,65,60
+    PUSHBUTTON      "指挥基站",IDC_BASE_STATION_BUTTON,77,32,65,60
+    PUSHBUTTON      "特殊编号",IDC_SPECIAL_CODE_BUTTON,9,98,65,60
+    PUSHBUTTON      "工作模式",IDC_WORKING_MODE_BUTTON,77,98,65,60
+    PUSHBUTTON      "保存设置",IDC_SAVE_SETTING_BUTTON,9,164,65,60
+    PUSHBUTTON      "系统设置",IDC_SYSTEM_SETTING_BUTTON,77,164,65,60
+    CONTROL         134,IDC_STATUS_STATIC,"Static",SS_BITMAP,7,7,9,9
+    LTEXT           "2017/04/09",IDC_SYSTEM_TIME_STATIC,58,7,51,8
+    CONTROL         133,IDC_BATTERY_STATIC,"Static",SS_BITMAP,135,7,9,5
+    GROUPBOX        "操作区",IDC_STATIC,7,20,137,210
+    LTEXT           "Copyright (C) 2017",IDC_STATIC,10,236,130,8
 END
 
 
@@ -132,11 +141,26 @@ BEGIN
     IDD_MONITOR_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
+        RIGHTMARGIN, 144
         TOPMARGIN, 7
+        BOTTOMMARGIN, 244
     END
 END
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_EMPTY_BITMAP        BITMAP                  "img\\empty.bmp"
+IDB_FULL_BITMAP         BITMAP                  "img\\full.bmp"
+IDB_LESS_BITMAP         BITMAP                  "img\\less.bmp"
+IDB_MEDIA_BITMAP        BITMAP                  "img\\media.bmp"
+IDB_MORE_BITMAP         BITMAP                  "img\\more.bmp"
+IDB_CONNECT_BITMAP      BITMAP                  "img\\connect.bmp"
+IDB_DISCONNECT_BITMAP   BITMAP                  "img\\disconnect.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
