@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PresetInfoDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -232,6 +236,10 @@
 			</File>
 			<File
 				RelativePath=".\MonitorDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PresetInfoDlg.h"
 				>
 			</File>
 			<File
