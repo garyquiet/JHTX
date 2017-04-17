@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SplashWnd.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -247,6 +251,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SplashWnd.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
@@ -256,6 +264,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\img\bitmap1.bmp"
+				>
+			</File>
 			<File
 				RelativePath=".\img\connect.bmp"
 				>
@@ -287,20 +299,6 @@
 			<File
 				RelativePath=".\Monitor.rc"
 				>
-				<FileConfiguration
-					Name="Debug|MyEmulator (ARMV4I)"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|MyEmulator (ARMV4I)"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\res\Monitor.rc2"
@@ -310,6 +308,10 @@
 				RelativePath=".\img\more.bmp"
 				>
 			</File>
+			<File
+				RelativePath=".\img\splash.bmp"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
@@ -317,5 +319,9 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="Monitor.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

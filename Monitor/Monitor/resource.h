@@ -20,6 +20,8 @@
 #define IDB_MORE_BITMAP                 133
 #define IDB_CONNECT_BITMAP              134
 #define IDB_DISCONNECT_BITMAP           135
+#define IDB_BITMAP2                     141
+#define IDB_SPLASH_BITMAP               141
 #define IDC_PRESET_INFO_BUTTON          1001
 #define IDC_SYSTEM_TIME_STATIC          1009
 #define IDC_SPECIAL_CODE_BUTTON         1010
@@ -49,14 +51,13 @@
 #define IDC_DATETIMEPICKER              1032
 #define IDC_HOUR_COMBO                  1033
 #define IDC_MINUTE_COMBO                1034
-#define IDC_COMBO3                      1035
 #define IDC_SECOND_COMBO                1035
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101

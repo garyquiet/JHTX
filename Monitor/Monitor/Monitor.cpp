@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Monitor.h"
 #include "MonitorDlg.h"
+#include "SplashWnd.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,6 +45,9 @@ BOOL CMonitorApp::InitInstance()
 
 	CMonitorDlg dlg;
 	m_pMainWnd = &dlg;
+
+	
+
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{

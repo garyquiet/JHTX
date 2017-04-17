@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Monitor.h"
 #include "MonitorDlg.h"
+#include "SplashWnd.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,6 +43,17 @@ BOOL CMonitorDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	
+
+	CSplashWnd *pSplashWindow = new CSplashWnd;//创建对象
+	pSplashWindow->CreateSplashWnd();
+	pSplashWindow->CenterWindow();
+	pSplashWindow->ShowWindow(SW_SHOW);  //显示窗口
+	pSplashWindow->UpdateWindow();
+	Sleep(3000);  //表示启动画面持续时间
+	pSplashWindow->DestroyWindow(); //销毁启动画面
+	delete pSplashWindow; //删除
+
 	
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
