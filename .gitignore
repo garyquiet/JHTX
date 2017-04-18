@@ -1,0 +1,5 @@
+# 只忽略dbg目录，不忽略Debug文件
+Debug/
+
+# 忽略*.ncb文件
+*.ncb
