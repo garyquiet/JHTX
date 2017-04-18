@@ -3,6 +3,10 @@
 
 #pragma once
 
+#include "CnComm.h"
+#include "const.h"
+#include "afxwin.h"
+
 // CMonitorDlg 对话框
 class CMonitorDlg : public CDialog
 {
@@ -11,7 +15,7 @@ public:
 	CMonitorDlg(CWnd* pParent = NULL);	// 标准构造函数
 
 // 对话框数据
-	enum { IDD = IDD_MONITOR_DIALOG };
+	enum { IDD = IDD_HOME_DIALOG };
 
 
 	protected:
@@ -27,4 +31,17 @@ protected:
 	afx_msg void OnSize(UINT /*nType*/, int /*cx*/, int /*cy*/);
 #endif
 	DECLARE_MESSAGE_MAP()
+
+
+private:
+	BOOL Init();
+	void ShowSplashWindow();
+
+private:
+	CnComm _Com;	//串口
+
+public:
+	
+	CStatic m_statusPic;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

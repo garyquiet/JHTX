@@ -235,6 +235,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\const.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Monitor.h"
 				>
 			</File>
