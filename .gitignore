@@ -1,4 +1,5 @@
 # 只忽略dbg目录，不忽略Debug文件
+MyEmulator (ARMV4I)/
 Debug/
 
 # 忽略*.ncb文件
