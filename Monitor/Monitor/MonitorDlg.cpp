@@ -21,7 +21,7 @@ CMonitorDlg::CMonitorDlg(CWnd* pParent /*=NULL*/)
 void CMonitorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_STATUS_STATIC, m_statusPic);
+	//DDX_Control(pDX, IDC_STATUS_STATIC, m_statusPic);
 }
 
 BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
@@ -45,9 +45,10 @@ BOOL CMonitorDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	Init();
-	ShowSplashWindow();
+	if(FALSE == Init())
+		return FALSE;
 
+	ShowSplashWindow();
 	
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -95,8 +96,8 @@ BOOL CMonitorDlg::Init(){
 			((CButton*)GetDlgItem(IDC_CHILD_BUTTON))->EnableWindow(TRUE);
 			((CEdit*)GetDlgItem(IDC_SEND_EDIT))->EnableWindow(TRUE);*/
 			
-			HBITMAP hBmp = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_CONNECT_BITMAP));  // 将位图IDB_BITMAP1加载到bitmap   
-			m_statusPic.SetBitmap(hBmp);
+			//HBITMAP hBmp = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_CONNECT_BITMAP));  // 将位图IDB_BITMAP1加载到bitmap   
+			//m_statusPic.SetBitmap(hBmp);
 
 			_Com.SetWnd(this->m_hWnd);
 			SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
@@ -130,12 +131,24 @@ void CMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 	{
 		CTime tm; 
 		tm=CTime::GetCurrentTime();
-		CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+		//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+		CString str = tm.Format(L"%H:%M:%S");
 		((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
+
+
+		if(_Com.IsOpen())
+			str = (L"串口连接:连接");
+		else
+			str = str = (L"串口连接:断开");
+		((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
 	}
 	else if(nIDEvent == TIMER_EVENT_POWER){
 		SYSTEM_POWER_STATUS_EX2 spsCurrent; 
 		DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
+
+		CString str = L"";
+		str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
+		((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 		
 	}
 

@@ -42,6 +42,5 @@ private:
 
 public:
 	
-	CStatic m_statusPic;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

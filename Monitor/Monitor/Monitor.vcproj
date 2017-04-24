@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ProtocolPkg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplashWnd.cpp"
 				>
 			</File>
@@ -248,6 +252,10 @@
 			</File>
 			<File
 				RelativePath=".\PresetInfoDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ProtocolPkg.h"
 				>
 			</File>
 			<File
