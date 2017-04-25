@@ -11,11 +11,11 @@
 
 /*Communication Protocol*/
 //接收协议
-#define PRCFG	"$PRCFG"				//预置信息设置指令
-#define IDCFG	"$IDCFG"				//指挥基站设置指令
-#define SNCFG	"$SNCFG"				//特殊编号设置指令
-#define MDCFG	"$MDCFG"				//工作模式切换指令
-#define SAVE	"$SAVE"					//存储指令
+#define PRCFG	L"$PRCFG"				//预置信息设置指令
+#define IDCFG	L"$IDCFG"				//指挥基站设置指令
+#define SNCFG	L"$SNCFG"				//特殊编号设置指令
+#define MDCFG	L"$MDCFG"				//工作模式切换指令
+#define SAVE	L"$SAVE"					//存储指令
 
 #define ANY					L"-1"		//任意值
 

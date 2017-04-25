@@ -25,6 +25,22 @@ public:
 	static CString CreateSAVEPacket(CString cmd, CString cfgID);
 
 
+	//发送预置信息报文
+	static DWORD SendPRCFGPacket(CString cmd, CString cfgID, CString msgID = ANY, CString data = ANY);
+
+	//发送指挥基站报文
+	static DWORD SendIDCFGPacket(CString cmd, CString cfgID, CString data = ANY);
+
+	//发送特殊编号报文
+	static DWORD SendSNCFGPacket(CString cmd, CString cfgID, CString data = ANY);
+
+	//发送工作模式切换指令报文
+	static DWORD SendMDCFGPacket(CString cmd, CString cfgID);
+
+	//发送存储指令报文
+	static DWORD SendSAVEPacket(CString cmd, CString cfgID);
+
+
 public:
 	//解析回执语句
 	static void ParseANS(CString content);

@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PresetInfoQueryDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ProtocolPkg.cpp"
 				>
 			</File>
@@ -252,6 +256,10 @@
 			</File>
 			<File
 				RelativePath=".\PresetInfoDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PresetInfoQueryDlg.h"
 				>
 			</File>
 			<File

@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ProtocolPkg.h"
+#include "Monitor.h"
 
 CProtocolPkg::CProtocolPkg(void)
 {
@@ -44,6 +45,77 @@ CString CProtocolPkg::CreateSAVEPacket(CString cmd, CString cfgID){
 	CString pkg = L"";
 	pkg.Format(L"%s,%s,%s,%s\r\n", cmd, cfgID);
 	return pkg;
+}
+
+
+//发送预置信息报文
+DWORD CProtocolPkg::SendPRCFGPacket(CString cmd, CString cfgID, CString msgID, CString data){
+	if (!theApp.m_Com.IsOpen())
+		return -1;
+
+	CString pkg = CreatePRCFGPacket(cmd, cfgID, msgID, data);
+	char buf[1024];
+	buf[wcstombs(buf, pkg, 1023)] = 0;
+
+	DWORD dwSend = theApp.m_Com.Write(buf);
+
+	return dwSend;
+}
+
+//发送指挥基站报文
+DWORD CProtocolPkg::SendIDCFGPacket(CString cmd, CString cfgID, CString data){
+	if (!theApp.m_Com.IsOpen())
+		return -1;
+
+	CString pkg = CreateIDCFGPacket(cmd, cfgID, data);
+	char buf[1024];
+	buf[wcstombs(buf, pkg, 1023)] = 0;
+
+	DWORD dwSend = theApp.m_Com.Write(buf);
+
+	return dwSend;
+}
+
+//发送特殊编号报文
+DWORD CProtocolPkg::SendSNCFGPacket(CString cmd, CString cfgID, CString data){
+	if (!theApp.m_Com.IsOpen())
+		return -1;
+
+	CString pkg = CreateSNCFGPacket(cmd, cfgID, data);
+	char buf[1024];
+	buf[wcstombs(buf, pkg, 1023)] = 0;
+
+	DWORD dwSend = theApp.m_Com.Write(buf);
+
+	return dwSend;
+}
+
+//发送工作模式切换指令报文
+DWORD CProtocolPkg::SendMDCFGPacket(CString cmd, CString cfgID){
+	if (!theApp.m_Com.IsOpen())
+		return -1;
+
+	CString pkg = CreateMDCFGPacket(cmd, cfgID);
+	char buf[1024];
+	buf[wcstombs(buf, pkg, 1023)] = 0;
+
+	DWORD dwSend = theApp.m_Com.Write(buf);
+
+	return dwSend;
+}
+
+//发送存储指令报文
+DWORD CProtocolPkg::SendSAVEPacket(CString cmd, CString cfgID){
+	if (!theApp.m_Com.IsOpen())
+		return -1;
+
+	CString pkg = CreateSAVEPacket(cmd, cfgID);
+	char buf[1024];
+	buf[wcstombs(buf, pkg, 1023)] = 0;
+
+	DWORD dwSend = theApp.m_Com.Write(buf);
+
+	return dwSend;
 }
 
 

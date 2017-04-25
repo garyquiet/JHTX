@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CnComm.h"
+
 #include "const.h"
 #include "afxwin.h"
 
@@ -34,13 +34,26 @@ protected:
 
 
 private:
+	//初始化
 	BOOL Init();
+
+	//显示启动画面
 	void ShowSplashWindow();
 
+	//显示串口连接状态
+	void ShowConnectionStatus();
+
+	//显示系统时间
+	void ShowSystemTime();
+
+	//显示电量
+	void ShowBatteryPower();
+
 private:
-	CnComm _Com;	//串口
+	//CnComm _Com;	//串口
 
 public:
 	
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnBnClickedPresetInfoButton();
 };

@@ -6,6 +6,9 @@
 #include "MonitorDlg.h"
 #include "SplashWnd.h"
 
+#include "PresetInfoDlg.h"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -30,6 +33,7 @@ BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
 #endif
 	//}}AFX_MSG_MAP
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_PRESET_INFO_BUTTON, &CMonitorDlg::OnBnClickedPresetInfoButton)
 END_MESSAGE_MAP()
 
 
@@ -70,19 +74,22 @@ void CMonitorDlg::OnSize(UINT /*nType*/, int /*cx*/, int /*cy*/)
 
 
 BOOL CMonitorDlg::Init(){
-	if (!_Com.IsOpen())
+	ShowConnectionStatus();
+	ShowSystemTime();
+	ShowBatteryPower();
+	if (!theApp.m_Com.IsOpen())
 	{
 		//if (!Com_.Open(m_uPort+1))
-		if (!_Com.Open(COM_PORT, BAUD_RATE))
+		if (!theApp.m_Com.Open(COM_PORT, BAUD_RATE))
 		{
 			TCHAR szBuf[1024];
 			wsprintf(szBuf, _T("打开 COM%d 失败, 代码:%d"), COM_PORT, GetLastError());
 			MessageBox(szBuf);
-			/*((CButton*)GetDlgItem(IDC_OPEN_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_CLOSE_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_SEND_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_CHILD_BUTTON))->EnableWindow(FALSE);
-			((CEdit*)GetDlgItem(IDC_SEND_EDIT))->EnableWindow(FALSE);*/
+			((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(FALSE);
+			((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(FALSE);
+			((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(FALSE);
+			((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(FALSE);
+			((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(FALSE);
 			return FALSE;
 		}
 		else
@@ -90,16 +97,16 @@ BOOL CMonitorDlg::Init(){
 			//SendDlgItemMessage(IDC_BUTTON_OPEN, WM_SETTEXT, 0, (LPARAM)_T("关闭"));
 			//m_Lamp.SetIcon(hIcons[1], FALSE);
 			//AfxMessageBox(L"打开成功");
-			/*((CButton*)GetDlgItem(IDC_OPEN_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_CLOSE_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_SEND_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_CHILD_BUTTON))->EnableWindow(TRUE);
-			((CEdit*)GetDlgItem(IDC_SEND_EDIT))->EnableWindow(TRUE);*/
+			((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(TRUE);
+			((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(TRUE);
+			((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(TRUE);
+			((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(TRUE);
+			((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(TRUE);
 			
 			//HBITMAP hBmp = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_CONNECT_BITMAP));  // 将位图IDB_BITMAP1加载到bitmap   
 			//m_statusPic.SetBitmap(hBmp);
 
-			_Com.SetWnd(this->m_hWnd);
+			theApp.m_Com.SetWnd(this->m_hWnd);
 			SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
 			SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
 			
@@ -111,7 +118,7 @@ BOOL CMonitorDlg::Init(){
 }
 
 
-
+//显示启动画面
 void CMonitorDlg::ShowSplashWindow(){
 	CSplashWnd *pSplashWindow = new CSplashWnd;//创建对象
 	pSplashWindow->CreateSplashWnd();
@@ -123,34 +130,62 @@ void CMonitorDlg::ShowSplashWindow(){
 	delete pSplashWindow; //删除
 }
 
+
+//显示串口连接状态
+void CMonitorDlg::ShowConnectionStatus(){
+	CString str = L"";
+
+	if(theApp.m_Com.IsOpen())
+		str = (L"串口连接:连接");
+	else
+		str = str = (L"串口连接:断开");
+	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
+}
+
+//显示系统时间
+void CMonitorDlg::ShowSystemTime(){
+	CTime tm; 
+	tm=CTime::GetCurrentTime();
+	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	CString str = tm.Format(L"%H:%M:%S");
+	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
+}
+
+//显示电量
+void CMonitorDlg::ShowBatteryPower(){
+	SYSTEM_POWER_STATUS_EX2 spsCurrent; 
+	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
+
+	CString str = L"";
+	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
+	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+}
+
+
 void CMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
 	if (nIDEvent == TIMER_EVENT_DATETIME)
 	{
-		CTime tm; 
-		tm=CTime::GetCurrentTime();
-		//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-		CString str = tm.Format(L"%H:%M:%S");
-		((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
-
-
-		if(_Com.IsOpen())
-			str = (L"串口连接:连接");
-		else
-			str = str = (L"串口连接:断开");
-		((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
+		ShowConnectionStatus();
+		ShowSystemTime();
 	}
 	else if(nIDEvent == TIMER_EVENT_POWER){
-		SYSTEM_POWER_STATUS_EX2 spsCurrent; 
-		DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
-
-		CString str = L"";
-		str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
-		((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
-		
+		ShowBatteryPower();		
 	}
 
 	CDialog::OnTimer(nIDEvent);
+}
+
+void CMonitorDlg::OnBnClickedPresetInfoButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CPresetInfoDlg dlg;
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+	}
 }
