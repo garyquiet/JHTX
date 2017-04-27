@@ -198,3 +198,73 @@ void CProtocolPkg::ParseOUT(CString content){
 	{“>>>hh:mm:ss,RNSS已定位，卫星数:xx颗”}
 	*/
 }
+
+//判断是否是数字
+BOOL CProtocolPkg::isNumber(TCHAR ch){
+	return isdigit(ch);
+}
+
+//判断是否是汉字
+BOOL CProtocolPkg::isHanZi(TCHAR ch)
+{
+	return ch > 255;
+}
+
+//判断是否全是数字
+BOOL CProtocolPkg::isAllNumber(CString input){
+	input = input.Trim();
+	for (int i = 0; i < input.GetLength(); ++i)
+	{
+		if( false == isNumber(input.GetAt(i)))
+			return FALSE;
+	}
+	return TRUE;
+}
+
+//判断是否全是汉字
+BOOL CProtocolPkg::isAllHanZi(CString input){
+	input = input.Trim();
+	for (int i = 0; i < input.GetLength(); ++i)
+	{
+		if( false == isHanZi(input.GetAt(i)))
+			return FALSE;
+	}
+	return TRUE;
+}
+
+
+//剔除字符串中非数字的字符
+CString CProtocolPkg::eliminateNonNumber(CString input){
+	input = input.Trim();
+
+	CString str = L"";
+
+	for (int i = 0; i < input.GetLength(); ++i)
+	{
+		TCHAR ch = input.GetAt(i);
+
+		if( isNumber(ch))
+		{
+			str.AppendChar(ch);
+		}
+	}
+	return str;
+}
+
+//剔除字符串中非汉字的字符
+CString CProtocolPkg::eliminateNonHanZi(CString input){
+	input = input.Trim();
+
+	CString str = L"";
+
+	for (int i = 0; i < input.GetLength(); ++i)
+	{
+		TCHAR ch = input.GetAt(i);
+
+		if( isHanZi(ch))
+		{
+			str.AppendChar(ch);
+		}
+	}
+	return str;
+}

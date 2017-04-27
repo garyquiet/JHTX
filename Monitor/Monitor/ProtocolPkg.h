@@ -14,6 +14,26 @@ private:
 	//分割字符串
 	static vector<CString> SplitString(CString strSource, CString split);
 
+public:
+	//判断是否是数字
+	static BOOL isNumber(TCHAR ch);
+
+	//判断是否是汉字
+	static BOOL isHanZi(TCHAR ch);
+
+	//判断是否全是数字
+	static BOOL isAllNumber(CString input);
+
+	//判断是否全是汉字
+	static BOOL isAllHanZi(CString input);
+
+	//剔除字符串中非数字的字符
+	static CString eliminateNonNumber(CString input);
+
+	//剔除字符串中非汉字的字符
+	static CString eliminateNonHanZi(CString input);
+
+
 
 public:
 	//创建预置信息报文

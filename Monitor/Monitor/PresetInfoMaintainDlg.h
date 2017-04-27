@@ -35,4 +35,8 @@ private:
 
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnBnClickedAddButton();
+	
+	CString m_strPresetInfoForAdd;
+	afx_msg void OnEnChangeInfoContentEditForAdd();
 };

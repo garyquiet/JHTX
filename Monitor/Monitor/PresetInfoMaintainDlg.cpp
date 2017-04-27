@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Monitor.h"
 #include "PresetInfoMaintainDlg.h"
+#include "ProtocolPkg.h"
 
 
 // CPresetInfoMaintainDlg 对话框
@@ -12,6 +13,8 @@ IMPLEMENT_DYNAMIC(CPresetInfoMaintainDlg, CDialog)
 
 CPresetInfoMaintainDlg::CPresetInfoMaintainDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPresetInfoMaintainDlg::IDD, pParent)
+	
+	, m_strPresetInfoForAdd(_T(""))
 {
 
 }
@@ -23,11 +26,16 @@ CPresetInfoMaintainDlg::~CPresetInfoMaintainDlg()
 void CPresetInfoMaintainDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+
+	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_ADD, m_strPresetInfoForAdd);
+	DDV_MaxChars(pDX, m_strPresetInfoForAdd, 8);
 }
 
 
 BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_ADD_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedAddButton)
+	ON_EN_CHANGE(IDC_INFO_CONTENT_EDIT_FOR_ADD, &CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd)
 END_MESSAGE_MAP()
 
 
@@ -93,4 +101,38 @@ void CPresetInfoMaintainDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 
 	CDialog::OnTimer(nIDEvent);
+}
+
+//增加预置信息
+void CPresetInfoMaintainDlg::OnBnClickedAddButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+
+}
+
+void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，则它将不会
+	// 发送该通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+
+	UpdateData(TRUE);
+	if(m_strPresetInfoForAdd.Trim().GetLength() > 0)
+	{
+		/*BOOL ret = CProtocolPkg::isHanZi(m_strPresetInfoForAdd.GetAt(m_strPresetInfoForAdd.GetLength() - 1));
+		if (ret == FALSE)
+		{
+			m_strPresetInfoForAdd.Delete(m_strPresetInfoForAdd.GetLength() - 1, 1);
+		}*/
+		m_strPresetInfoForAdd = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForAdd);
+		UpdateData(FALSE);
+
+		int nLength = m_strPresetInfoForAdd.GetLength();
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_ADD))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_ADD))->SetFocus();
+	}
 }
