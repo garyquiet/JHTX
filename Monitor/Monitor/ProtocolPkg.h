@@ -2,11 +2,18 @@
 
 #include "const.h"
 
+
 class CProtocolPkg
 {
 public:
 	CProtocolPkg(void);
 	~CProtocolPkg(void);
+
+private:
+
+	//分割字符串
+	static vector<CString> SplitString(CString strSource, CString split);
+
 
 public:
 	//创建预置信息报文
@@ -43,11 +50,15 @@ public:
 
 public:
 	//解析回执语句
-	static void ParseANS(CString content);
+	static void ParseANS(int type, CString content);
 
 	//解析模式报告
 	static void ParseMOD(CString content);
 
 	//解析同步报文
 	static void ParseOUT(CString content);
+
+	//解析查询返回的预置信息
+	static map<CString,CString> ParsePresetInfo(CString content);
+
 };

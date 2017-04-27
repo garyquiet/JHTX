@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PresetInfoMaintainDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PresetInfoQueryDlg.cpp"
 				>
 			</File>
@@ -256,6 +260,10 @@
 			</File>
 			<File
 				RelativePath=".\PresetInfoDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PresetInfoMaintainDlg.h"
 				>
 			</File>
 			<File

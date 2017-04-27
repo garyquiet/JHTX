@@ -6,6 +6,7 @@
 #include "PresetInfoDlg.h"
 
 #include "PresetInfoQueryDlg.h"
+#include "PresetInfoMaintainDlg.h"
 
 // CPresetInfoDlg 对话框
 
@@ -30,6 +31,7 @@ void CPresetInfoDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPresetInfoDlg, CDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_QUERY_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedQueryPresetInfoButton)
+	ON_BN_CLICKED(IDC_MAINTAIN_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton)
 END_MESSAGE_MAP()
 
 
@@ -102,6 +104,18 @@ void CPresetInfoDlg::OnBnClickedQueryPresetInfoButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CPresetInfoQueryDlg dlg;
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+	}
+}
+
+void CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CPresetInfoMaintainDlg dlg;
 
 	int ret = dlg.DoModal();
 

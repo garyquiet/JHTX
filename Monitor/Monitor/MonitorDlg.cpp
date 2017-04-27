@@ -52,7 +52,7 @@ BOOL CMonitorDlg::OnInitDialog()
 	if(FALSE == Init())
 		return FALSE;
 
-	ShowSplashWindow();
+	//ShowSplashWindow();
 	
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

@@ -10,6 +10,20 @@ CProtocolPkg::~CProtocolPkg(void)
 {
 }
 
+vector<CString> CProtocolPkg::SplitString(CString strSource, CString split)  
+{  
+	vector <CString> vecString;
+	int iPos = 0;
+	CString strTmp;
+	strTmp = strSource.Tokenize(split,iPos);
+	while(strTmp.Trim() != _T(""))
+	{
+		vecString.push_back(strTmp);
+		strTmp = strSource.Tokenize(split,iPos);
+	}
+	return vecString;
+}  
+
 
 //创建预置信息报文
 CString CProtocolPkg::CreatePRCFGPacket(CString cmd, CString cfgID, CString msgID, CString data){
@@ -120,23 +134,52 @@ DWORD CProtocolPkg::SendSAVEPacket(CString cmd, CString cfgID){
 
 
 //解析回执语句
-void CProtocolPkg::ParseANS(CString content){
-	/*
-	{“设置成功!”}
-	{“设置失败!”}
-	{“保存成功!”}
-	{“初始化成功!”}
-	{“预置信息空!”}
-	{“信息格式错误!”}
+void CProtocolPkg::ParseANS(int type, CString content){
+	
+	switch (type)
+	{
+	case 1:
+		/*
+		{“设置成功!”}
+		{“设置失败!”}
+		{“保存成功!”}
+		{“初始化成功!”}
+		{“预置信息空!”}
+		{“信息格式错误!”}
+		*/
+		break;
+	case 2:
+		/*
+		{“上报基站：XXXXXXX”}
+		*/
+		break;
+	case 3:
+		/*
+		{“01.(第1条预置信息)”}
+		{“02.(第2条预置信息)”}
+		*/
+	default:
+		break;
+	}
+}
 
-	*/
+//解析查询返回的预置信息
+map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
+	map<CString, CString> dic;
+	vector<CString> vs = SplitString(content, L"\r\n");
 
-	/*
-	{“上报基站：XXXXXXX”}
-	{“01.(第1条预置信息)”}
-	{“02.(第2条预置信息)”}
+	for(vector<CString>::iterator it = vs.begin(); it != vs.end(); ++it){
+		int index = (*it).Find('.');
+		CString no = (*it).Mid(index - 2, 2);
 
-	*/
+		int begin = (*it).Find('(');
+		int end = (*it).Find(')');
+		CString info = (*it).Mid(begin + 1, end - begin - 1);
+
+		dic.insert(map<CString, CString>::value_type(no, info));
+	}
+
+	return dic;
 }
 
 //解析模式报告

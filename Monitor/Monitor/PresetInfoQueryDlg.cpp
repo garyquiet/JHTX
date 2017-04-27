@@ -66,6 +66,8 @@ void CPresetInfoQueryDlg::ShowBatteryPower(){
 	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
 	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 }
+
+
 void CPresetInfoQueryDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
@@ -91,11 +93,11 @@ void CPresetInfoQueryDlg::InitListCtrl(){
 	m_listCtrl.InsertColumn( 0, L"序号", LVCFMT_LEFT, 40 );//插入列
 	m_listCtrl.InsertColumn( 1, L"信息", LVCFMT_LEFT, 200 );
 
-	for (int i = 0; i < 30; ++i)
-	{
-		int nRow = m_listCtrl.InsertItem(i, L"1");//插入行
-		m_listCtrl.SetItemText(nRow, 1, L"jacky");//设置数据
-	}
+	//for (int i = 0; i < 30; ++i)
+	//{
+	//	int nRow = m_listCtrl.InsertItem(i, L"1");//插入行
+	//	m_listCtrl.SetItemText(nRow, 1, L"jacky");//设置数据
+	//}
 	
 }
 
@@ -120,7 +122,7 @@ BOOL CPresetInfoQueryDlg::OnInitDialog()
 	// 异常: OCX 属性页应返回 FALSE
 }
 
-LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM, LPARAM)
+LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 {
 	char buf[1024];
 	TCHAR sbuf[1024];
@@ -134,6 +136,18 @@ LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM, LPARAM)
 	CString str = L"";
 	str += sbuf;
 	str += _T("\r\n");
+
+	map<CString, CString> dic = CProtocolPkg::ParsePresetInfo(str);
+
+	m_listCtrl.DeleteAllItems();
+	int i = 0;
+	for(map<CString,CString>::iterator iter = dic.begin(); iter != dic.end(); ++iter)
+	{
+
+		int nRow = m_listCtrl.InsertItem(i, iter->first);//插入行
+		m_listCtrl.SetItemText(nRow, 1, iter->second);//设置数据
+		++i;
+	}
 
 	return 1;
 }
