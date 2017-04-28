@@ -43,4 +43,5 @@ public:
 	CString m_strPresetInfoForAdd;
 	afx_msg void OnEnChangeInfoContentEditForAdd();
 	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
+	afx_msg void OnBnClickedCancel();
 };

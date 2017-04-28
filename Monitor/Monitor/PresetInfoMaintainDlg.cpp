@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Monitor.h"
+#include "PresetInfoDlg.h"
 #include "PresetInfoMaintainDlg.h"
 #include "ProtocolPkg.h"
 
@@ -38,6 +39,7 @@ BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 	ON_EN_CHANGE(IDC_INFO_CONTENT_EDIT_FOR_ADD, &CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd)
 
 	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
+	ON_BN_CLICKED(IDCANCEL, &CPresetInfoMaintainDlg::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -177,4 +179,11 @@ LRESULT CPresetInfoMaintainDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	SetTipInfo(tip);
 
 	return 1;
+}
+void CPresetInfoMaintainDlg::OnBnClickedCancel()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//((CPresetInfoDlg*)GetParent())->m_hWnd
+	theApp.m_Com.SetWnd(((CPresetInfoDlg*)GetParent())->m_hWnd);
+	OnCancel();
 }

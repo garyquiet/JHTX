@@ -37,4 +37,6 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedQueryPresetInfoButton();
 	afx_msg void OnBnClickedMaintainPresetInfoButton();
+
+	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
 };

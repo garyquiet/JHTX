@@ -30,6 +30,8 @@ void CPresetInfoDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPresetInfoDlg, CDialog)
 	ON_WM_TIMER()
+	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
+
 	ON_BN_CLICKED(IDC_QUERY_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedQueryPresetInfoButton)
 	ON_BN_CLICKED(IDC_MAINTAIN_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton)
 END_MESSAGE_MAP()
@@ -122,4 +124,22 @@ void CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton()
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
 	}
+}
+
+LRESULT CPresetInfoDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
+{
+	char buf[RCV_BUFFER_SIZE];
+	TCHAR sbuf[RCV_BUFFER_SIZE];
+	memset(sbuf, 0, sizeof(sbuf));
+	int len;
+
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
+
+	mbstowcs(sbuf, buf, len);
+
+	CString str = L"";
+	str += sbuf;
+	str += _T("\r\n");
+
+	return 1;
 }
