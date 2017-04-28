@@ -2,6 +2,8 @@
 #define BAUD_RATE	115200
 #define	COM_PORT	3
 
+#define RCV_BUFFER_SIZE			650
+#define SND_BUFFER_SIZE			100
 
 #define TIMER_EVENT_DATETIME	1
 #define	TIMER_EVENT_POWER		2

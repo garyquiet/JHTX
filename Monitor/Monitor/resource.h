@@ -34,7 +34,6 @@
 #define IDC_MAINTAIN_PRESET_INFO_BUTTON 1015
 #define IDC_WORKING_MODE_BUTTON         1016
 #define IDC_INFO_CONTENT_EDIT           1016
-#define IDC_INFO_CONTENT_EDIT_FOR_AD    1016
 #define IDC_INFO_CONTENT_EDIT_FOR_ADD   1016
 #define IDC_SYSTEM_SETTING_BUTTON       1017
 #define IDC_INFOR_NO_EDIT               1017
@@ -61,6 +60,7 @@
 #define IDC_STATIC_COM_STATUS           1037
 #define IDC_STATIC_RET_STUTAS           1038
 #define IDC_COMPLETE__STUTAS_STATIC     1039
+#define IDC_COMPLETE_STUTAS_STATIC      1040
 #define IDC_RESULT_STUTAS_STATIC        65535
 
 // Next default values for new objects
@@ -69,7 +69,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1041
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

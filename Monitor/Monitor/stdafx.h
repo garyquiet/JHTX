@@ -10,6 +10,7 @@
 // 注意 - 这个值与作为目标的 Windows CE OS 版本的关联性并不强
 #define WINVER _WIN32_WCE
 
+
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN		// 从 Windows 头中排除极少使用的资料
 #endif

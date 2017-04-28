@@ -24,6 +24,23 @@ vector<CString> CProtocolPkg::SplitString(CString strSource, CString split)
 	return vecString;
 }  
 
+//查找字符
+int CProtocolPkg::search(CString source, CString ch){
+
+	for (int i = 0; i < source.GetLength(); ++i)
+	{
+		TCHAR tc = source.GetAt(i);
+		CString tmp = L"";
+		tmp.Format(L"%c", tc);
+
+		if( ch == tmp ){
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 
 //创建预置信息报文
 CString CProtocolPkg::CreatePRCFGPacket(CString cmd, CString cfgID, CString msgID, CString data){
@@ -68,8 +85,8 @@ DWORD CProtocolPkg::SendPRCFGPacket(CString cmd, CString cfgID, CString msgID, C
 		return -1;
 
 	CString pkg = CreatePRCFGPacket(cmd, cfgID, msgID, data);
-	char buf[1024];
-	buf[wcstombs(buf, pkg, 1023)] = 0;
+	char buf[SND_BUFFER_SIZE];
+	buf[wcstombs(buf, pkg, SND_BUFFER_SIZE - 1)] = 0;
 
 	DWORD dwSend = theApp.m_Com.Write(buf);
 
@@ -82,8 +99,8 @@ DWORD CProtocolPkg::SendIDCFGPacket(CString cmd, CString cfgID, CString data){
 		return -1;
 
 	CString pkg = CreateIDCFGPacket(cmd, cfgID, data);
-	char buf[1024];
-	buf[wcstombs(buf, pkg, 1023)] = 0;
+	char buf[SND_BUFFER_SIZE];
+	buf[wcstombs(buf, pkg, SND_BUFFER_SIZE - 1)] = 0;
 
 	DWORD dwSend = theApp.m_Com.Write(buf);
 
@@ -96,8 +113,8 @@ DWORD CProtocolPkg::SendSNCFGPacket(CString cmd, CString cfgID, CString data){
 		return -1;
 
 	CString pkg = CreateSNCFGPacket(cmd, cfgID, data);
-	char buf[1024];
-	buf[wcstombs(buf, pkg, 1023)] = 0;
+	char buf[SND_BUFFER_SIZE];
+	buf[wcstombs(buf, pkg, SND_BUFFER_SIZE - 1)] = 0;
 
 	DWORD dwSend = theApp.m_Com.Write(buf);
 
@@ -110,8 +127,8 @@ DWORD CProtocolPkg::SendMDCFGPacket(CString cmd, CString cfgID){
 		return -1;
 
 	CString pkg = CreateMDCFGPacket(cmd, cfgID);
-	char buf[1024];
-	buf[wcstombs(buf, pkg, 1023)] = 0;
+	char buf[SND_BUFFER_SIZE];
+	buf[wcstombs(buf, pkg, SND_BUFFER_SIZE - 1)] = 0;
 
 	DWORD dwSend = theApp.m_Com.Write(buf);
 
@@ -124,8 +141,8 @@ DWORD CProtocolPkg::SendSAVEPacket(CString cmd, CString cfgID){
 		return -1;
 
 	CString pkg = CreateSAVEPacket(cmd, cfgID);
-	char buf[1024];
-	buf[wcstombs(buf, pkg, 1023)] = 0;
+	char buf[SND_BUFFER_SIZE];
+	buf[wcstombs(buf, pkg, SND_BUFFER_SIZE - 1)] = 0;
 
 	DWORD dwSend = theApp.m_Com.Write(buf);
 
@@ -134,11 +151,12 @@ DWORD CProtocolPkg::SendSAVEPacket(CString cmd, CString cfgID){
 
 
 //解析回执语句
-void CProtocolPkg::ParseANS(int type, CString content){
+CString CProtocolPkg::ParseANS(int type, CString content){
+	CString str = L"";
 	
 	switch (type)
 	{
-	case 1:
+	case 1://一般信息回执
 		/*
 		{“设置成功!”}
 		{“设置失败!”}
@@ -147,20 +165,46 @@ void CProtocolPkg::ParseANS(int type, CString content){
 		{“预置信息空!”}
 		{“信息格式错误!”}
 		*/
+		{
+			//int begin = content.Find("第");
+			//int end = content.Find('”');
+			int begin = search(content, L"“");
+			int end = search(content, L"”");
+			CString info = content.Mid(begin + 1, end - begin - 1);
+			str = info;
+		}
 		break;
-	case 2:
+	case 2: //中心号码查询回执
 		/*
 		{“上报基站：XXXXXXX”}
 		*/
+		{
+			/*int begin = content.Find('“');
+			int end = content.Find('”');*/
+			int begin = search(content,L"“");
+			int end = search(content, L"”");
+			CString info = content.Mid(begin + 1, end - begin - 1);
+
+			//int index = info.Find('：');
+			int index = search(info, L"：");
+			str = info.Right(info.GetLength() - index - 1);
+		}
+		
 		break;
 	case 3:
 		/*
 		{“01.(第1条预置信息)”}
 		{“02.(第2条预置信息)”}
 		*/
+		{
+
+		}
+		break;
 	default:
 		break;
 	}
+
+	return str;
 }
 
 //解析查询返回的预置信息
@@ -169,11 +213,14 @@ map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
 	vector<CString> vs = SplitString(content, L"\r\n");
 
 	for(vector<CString>::iterator it = vs.begin(); it != vs.end(); ++it){
-		int index = (*it).Find('.');
+		//int index = (*it).Find('.');
+		int index = search((*it), L".");
 		CString no = (*it).Mid(index - 2, 2);
 
-		int begin = (*it).Find('(');
-		int end = (*it).Find(')');
+		/*int begin = (*it).Find('(');
+		int end = (*it).Find(')');*/
+		int begin = search((*it), L"(");
+		int end = search((*it), L")");
 		CString info = (*it).Mid(begin + 1, end - begin - 1);
 
 		dic.insert(map<CString, CString>::value_type(no, info));

@@ -33,10 +33,14 @@ private:
 	//显示电量
 	void ShowBatteryPower();
 
+	//设置操作结果提示信息
+	void SetTipInfo(CString tip);
+
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedAddButton();
 	
 	CString m_strPresetInfoForAdd;
 	afx_msg void OnEnChangeInfoContentEditForAdd();
+	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
 };

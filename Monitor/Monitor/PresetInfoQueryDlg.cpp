@@ -124,12 +124,12 @@ BOOL CPresetInfoQueryDlg::OnInitDialog()
 
 LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 {
-	char buf[1024];
-	TCHAR sbuf[1024];
+	char buf[RCV_BUFFER_SIZE];
+	TCHAR sbuf[RCV_BUFFER_SIZE];
 	memset(sbuf, 0, sizeof(sbuf));
 	int len;
 
-	len = theApp.m_Com.Read(buf, 1024);
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
 
 	mbstowcs(sbuf, buf, len);
 

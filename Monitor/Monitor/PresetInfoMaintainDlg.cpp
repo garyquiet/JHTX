@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_ADD_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedAddButton)
 	ON_EN_CHANGE(IDC_INFO_CONTENT_EDIT_FOR_ADD, &CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd)
+
+	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
 END_MESSAGE_MAP()
 
 
@@ -88,6 +90,17 @@ void CPresetInfoMaintainDlg::ShowBatteryPower(){
 	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
 	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 }
+
+//设置提示信息
+void CPresetInfoMaintainDlg::SetTipInfo(CString tip){
+	CTime tm = CTime::GetCurrentTime();
+	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	CString time = tm.Format(L"%H:%M:%S");
+	CString info = L"";
+	info.Format(L"%s  %s",time, tip);
+	SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
+}
+
 void CPresetInfoMaintainDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
@@ -108,6 +121,13 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
+	DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForAdd.Trim());
+
+	if (len > 0)
+	{
+		CString tip = L"预置信息增加命令发送成功!";
+		SetTipInfo(tip);
+	}
 
 }
 
@@ -131,8 +151,30 @@ void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd()
 		m_strPresetInfoForAdd = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForAdd);
 		UpdateData(FALSE);
 
-		int nLength = m_strPresetInfoForAdd.GetLength();
+		/*int nLength = m_strPresetInfoForAdd.GetLength();
 		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_ADD))->SetSel(nLength,nLength, FALSE);
-		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_ADD))->SetFocus();
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_ADD))->SetFocus();*/
 	}
+}
+
+LRESULT CPresetInfoMaintainDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
+{
+	char buf[RCV_BUFFER_SIZE];
+	TCHAR sbuf[RCV_BUFFER_SIZE];
+	memset(sbuf, 0, sizeof(sbuf));
+	int len;
+
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
+
+	mbstowcs(sbuf, buf, len);
+
+	CString str = L"";
+	str += sbuf;
+	str += _T("\r\n");
+
+	//map<CString, CString> dic = CProtocolPkg::ParsePresetInfo(str);
+	CString tip = CProtocolPkg::ParseANS(1,str);
+	SetTipInfo(tip);
+
+	return 1;
 }

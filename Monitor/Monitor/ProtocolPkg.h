@@ -34,6 +34,9 @@ public:
 	static CString eliminateNonHanZi(CString input);
 
 
+	//查找字符
+	static int search(CString source, CString ch); 
+
 
 public:
 	//创建预置信息报文
@@ -70,7 +73,7 @@ public:
 
 public:
 	//解析回执语句
-	static void ParseANS(int type, CString content);
+	static CString ParseANS(int type, CString content);
 
 	//解析模式报告
 	static void ParseMOD(CString content);
