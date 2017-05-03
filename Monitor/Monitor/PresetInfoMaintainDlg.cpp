@@ -16,6 +16,9 @@ CPresetInfoMaintainDlg::CPresetInfoMaintainDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPresetInfoMaintainDlg::IDD, pParent)
 	
 	, m_strPresetInfoForAdd(_T(""))
+	, m_strPresetInfoForModify(_T(""))
+	, m_iPresetInfoNoForModify(1)
+	, m_iPresetInfoNoForDelete(1)
 {
 
 }
@@ -30,6 +33,12 @@ void CPresetInfoMaintainDlg::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_ADD, m_strPresetInfoForAdd);
 	DDV_MaxChars(pDX, m_strPresetInfoForAdd, 8);
+	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_MODIFY, m_strPresetInfoForModify);
+	DDV_MaxChars(pDX, m_strPresetInfoForModify, 8);
+	DDX_Text(pDX, IDC_INFOR_NO_EDIT_FOR_MODIFY, m_iPresetInfoNoForModify);
+	DDV_MinMaxUInt(pDX, m_iPresetInfoNoForModify, 1, 30);
+	DDX_Text(pDX, IDC_INFO_NO_EDIT_FOR_DELETE, m_iPresetInfoNoForDelete);
+	DDV_MinMaxUInt(pDX, m_iPresetInfoNoForDelete, 1, 30);
 }
 
 
@@ -40,6 +49,9 @@ BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 
 	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
 	ON_BN_CLICKED(IDCANCEL, &CPresetInfoMaintainDlg::OnBnClickedCancel)
+	ON_EN_CHANGE(IDC_INFO_CONTENT_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForModify)
+	ON_BN_CLICKED(IDC_MODIFY_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedModifyButton)
+	ON_BN_CLICKED(IDC_DELETE_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedDeleteButton)
 END_MESSAGE_MAP()
 
 
@@ -123,12 +135,20 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
-	DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForAdd.Trim());
 
-	if (len > 0)
+	if (m_strPresetInfoForAdd.Trim().GetLength() > 0)
 	{
-		CString tip = L"预置信息增加命令发送成功!";
-		SetTipInfo(tip);
+	
+		DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForAdd.Trim());
+
+		if (len > 0)
+		{
+			CString tip = L"预置信息增加命令发送成功!";
+			SetTipInfo(tip);
+		}
+	}
+	else{
+		MessageBox(L"预置信息不能为空!");
 	}
 
 }
@@ -174,7 +194,6 @@ LRESULT CPresetInfoMaintainDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	str += sbuf;
 	str += _T("\r\n");
 
-	//map<CString, CString> dic = CProtocolPkg::ParsePresetInfo(str);
 	CString tip = CProtocolPkg::ParseANS(1,str);
 	SetTipInfo(tip);
 
@@ -186,4 +205,63 @@ void CPresetInfoMaintainDlg::OnBnClickedCancel()
 	//((CPresetInfoDlg*)GetParent())->m_hWnd
 	theApp.m_Com.SetWnd(((CPresetInfoDlg*)GetParent())->m_hWnd);
 	OnCancel();
+}
+
+void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForModify()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，则它将不会
+	// 发送该通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	if(m_strPresetInfoForModify.Trim().GetLength() > 0)
+	{
+		m_strPresetInfoForModify = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForModify);
+		UpdateData(FALSE);
+	}
+}
+
+void CPresetInfoMaintainDlg::OnBnClickedModifyButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if(TRUE == UpdateData(TRUE)){
+
+		if (m_strPresetInfoForModify.Trim().GetLength() > 0)
+		{
+			CString tmp = L"";
+			tmp.Format(L"%d", m_iPresetInfoNoForModify);
+			DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_MODIFY, tmp, m_strPresetInfoForModify.Trim());
+
+			if (len > 0)
+			{
+				CString tip = L"预置信息覆盖命令发送成功!";
+				SetTipInfo(tip);
+			}
+		}
+		else{
+			MessageBox(L"预置信息不能为空!");
+		}
+		
+	}
+}
+
+void CPresetInfoMaintainDlg::OnBnClickedDeleteButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	if(TRUE == UpdateData(TRUE)){
+
+		CString tmp = L"";
+		tmp.Format(L"%d", m_iPresetInfoNoForDelete);
+		DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_DELETE, tmp, ANY);
+
+		if (len > 0)
+		{
+			CString tip = L"预置信息删除命令发送成功!";
+			SetTipInfo(tip);
+		}
+	}
+	
 }

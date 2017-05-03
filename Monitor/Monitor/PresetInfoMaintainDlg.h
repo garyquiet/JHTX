@@ -44,4 +44,12 @@ public:
 	afx_msg void OnEnChangeInfoContentEditForAdd();
 	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
 	afx_msg void OnBnClickedCancel();
+	// 输入修改的预置信息
+	CString m_strPresetInfoForModify;
+	afx_msg void OnEnChangeInfoContentEditForModify();
+	afx_msg void OnBnClickedModifyButton();
+	// 预置信息编号
+	UINT m_iPresetInfoNoForModify;
+	UINT m_iPresetInfoNoForDelete;
+	afx_msg void OnBnClickedDeleteButton();
 };
