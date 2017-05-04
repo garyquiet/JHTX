@@ -146,6 +146,10 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 			CString tip = L"预置信息增加命令发送成功!";
 			SetTipInfo(tip);
 		}
+		else{
+			CString tip = L"预置信息增加命令发送失败!";
+			SetTipInfo(tip);
+		}
 	}
 	else{
 		MessageBox(L"预置信息不能为空!");
@@ -199,6 +203,8 @@ LRESULT CPresetInfoMaintainDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 
 	return 1;
 }
+
+
 void CPresetInfoMaintainDlg::OnBnClickedCancel()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -239,6 +245,10 @@ void CPresetInfoMaintainDlg::OnBnClickedModifyButton()
 				CString tip = L"预置信息覆盖命令发送成功!";
 				SetTipInfo(tip);
 			}
+			else{
+				CString tip = L"预置信息覆盖命令发送失败!";
+				SetTipInfo(tip);
+			}
 		}
 		else{
 			MessageBox(L"预置信息不能为空!");
@@ -260,6 +270,10 @@ void CPresetInfoMaintainDlg::OnBnClickedDeleteButton()
 		if (len > 0)
 		{
 			CString tip = L"预置信息删除命令发送成功!";
+			SetTipInfo(tip);
+		}
+		else{
+			CString tip = L"预置信息删除命令发送失败!";
 			SetTipInfo(tip);
 		}
 	}

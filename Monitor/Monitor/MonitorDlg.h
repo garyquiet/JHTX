@@ -53,8 +53,11 @@ private:
 	//CnComm _Com;	//´®¿Ú
 
 public:
-	
+
+	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
+
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedPresetInfoButton();
 	afx_msg void OnBnClickedSystemSettingButton();
+	afx_msg void OnBnClickedSaveSettingButton();
 };

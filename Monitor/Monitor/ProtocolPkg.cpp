@@ -53,28 +53,28 @@ CString CProtocolPkg::CreatePRCFGPacket(CString cmd, CString cfgID, CString msgI
 //创建指挥基站报文
 CString CProtocolPkg::CreateIDCFGPacket(CString cmd, CString cfgID, CString data){
 	CString pkg = L"";
-	pkg.Format(L"%s,%s,%s,%s\r\n", cmd, cfgID, data);
+	pkg.Format(L"%s,%s,%s\r\n", cmd, cfgID, data);
 	return pkg;
 }
 
 //创建特殊编号报文
 CString CProtocolPkg::CreateSNCFGPacket(CString cmd, CString cfgID, CString data){
 	CString pkg = L"";
-	pkg.Format(L"%s,%s,%s,%s\r\n", cmd, cfgID, data);
+	pkg.Format(L"%s,%s,%s\r\n", cmd, cfgID, data);
 	return pkg;
 }
 
 //创建工作模式切换指令报文
 CString CProtocolPkg::CreateMDCFGPacket(CString cmd, CString cfgID){
 	CString pkg = L"";
-	pkg.Format(L"%s,%s,%s,%s\r\n", cmd, cfgID);
+	pkg.Format(L"%s,%s\r\n", cmd, cfgID);
 	return pkg;
 }
 
 //创建存储指令报文
 CString CProtocolPkg::CreateSAVEPacket(CString cmd, CString cfgID){
 	CString pkg = L"";
-	pkg.Format(L"%s,%s,%s,%s\r\n", cmd, cfgID);
+	pkg.Format(L"%s,%s\r\n", cmd, cfgID);
 	return pkg;
 }
 

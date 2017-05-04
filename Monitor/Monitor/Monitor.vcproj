@@ -213,6 +213,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SaveSettingDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplashWnd.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SaveSettingDlg.h"
 				>
 			</File>
 			<File

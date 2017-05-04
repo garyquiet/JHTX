@@ -8,6 +8,7 @@
 
 #include "PresetInfoDlg.h"
 #include "SystemSettingDlg.h"
+#include "SaveSettingDlg.h"
 
 
 #ifdef _DEBUG
@@ -34,8 +35,10 @@ BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
 #endif
 	//}}AFX_MSG_MAP
 	ON_WM_TIMER()
+	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
 	ON_BN_CLICKED(IDC_PRESET_INFO_BUTTON, &CMonitorDlg::OnBnClickedPresetInfoButton)
 	ON_BN_CLICKED(IDC_SYSTEM_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSystemSettingButton)
+	ON_BN_CLICKED(IDC_SAVE_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSaveSettingButton)
 END_MESSAGE_MAP()
 
 
@@ -132,6 +135,23 @@ void CMonitorDlg::ShowSplashWindow(){
 	delete pSplashWindow; //删除
 }
 
+LRESULT CMonitorDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
+{
+	char buf[RCV_BUFFER_SIZE];
+	TCHAR sbuf[RCV_BUFFER_SIZE];
+	memset(sbuf, 0, sizeof(sbuf));
+	int len;
+
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
+
+	mbstowcs(sbuf, buf, len);
+
+	CString str = L"";
+	str += sbuf;
+	str += _T("\r\n");
+
+	return 1;
+}
 
 //显示串口连接状态
 void CMonitorDlg::ShowConnectionStatus(){
@@ -196,6 +216,18 @@ void CMonitorDlg::OnBnClickedSystemSettingButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CSystemSettingDlg dlg;
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+	}
+}
+
+void CMonitorDlg::OnBnClickedSaveSettingButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CSaveSettingDlg dlg;
 
 	int ret = dlg.DoModal();
 

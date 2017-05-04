@@ -32,6 +32,7 @@ void CSystemSettingDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSystemSettingDlg, CDialog)
 	ON_BN_CLICKED(IDC_SET_BUTTON, &CSystemSettingDlg::OnBnClickedSetButton)
+	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
@@ -75,14 +76,14 @@ void CSystemSettingDlg::Init(){
 	m_comboMinute.ResetContent();
 	m_comboSecond.ResetContent();
 
-	for (int i = 0; i < 24; i++)
+	for (int i = 0; i < CONST_TOTAL_HOUR; i++)
 	{
 		CString str = L"";
 		str.Format(L"%02d", i);
 		m_comboHour.AddString(str);
 	}
 
-	for (int i = 0; i < 60; i++)
+	for (int i = 0; i < CONST_TOTAL_MINUTE; i++)
 	{
 		CString str = L"";
 		str.Format(L"%02d", i);
@@ -211,4 +212,22 @@ void CSystemSettingDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 
 	CDialog::OnTimer(nIDEvent);
+}
+
+LRESULT CSystemSettingDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
+{
+	char buf[RCV_BUFFER_SIZE];
+	TCHAR sbuf[RCV_BUFFER_SIZE];
+	memset(sbuf, 0, sizeof(sbuf));
+	int len;
+
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
+
+	mbstowcs(sbuf, buf, len);
+
+	CString str = L"";
+	str += sbuf;
+	str += _T("\r\n");
+
+	return 1;
 }

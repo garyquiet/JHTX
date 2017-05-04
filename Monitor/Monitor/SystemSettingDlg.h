@@ -36,6 +36,8 @@ public:
 
 	afx_msg void OnBnClickedSetButton();
 
+	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
+
 
 private:
 

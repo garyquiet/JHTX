@@ -11,6 +11,14 @@
 #define	TIME_INTERVAL_MINUTE		60000
 #define TIME_INTERVAL_FALF_MINUTE	30000
 
+#define CONST_TOTAL_HOUR			24
+#define CONST_TOTAL_MINUTE			60
+#define CONST_TOTAL_SECOND			60
+
+#define	CONST_TOTAL_SAVE_METHOD		4
+#define CONST_TOTAL_WORK_MODE		5
+
+
 /*Communication Protocol*/
 //接收协议
 #define PRCFG	L"$PRCFG"				//预置信息设置指令
