@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL"
+				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL;OPTIMIZATION"
 				MinimalRebuild="true"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
@@ -244,6 +244,10 @@
 				RelativePath=".\SystemSettingDlg.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WorkingModeDlg.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -300,6 +304,10 @@
 			</File>
 			<File
 				RelativePath=".\SystemSettingDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WorkingModeDlg.h"
 				>
 			</File>
 		</Filter>

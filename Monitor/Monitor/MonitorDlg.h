@@ -60,4 +60,5 @@ public:
 	afx_msg void OnBnClickedPresetInfoButton();
 	afx_msg void OnBnClickedSystemSettingButton();
 	afx_msg void OnBnClickedSaveSettingButton();
+	afx_msg void OnBnClickedWorkingModeButton();
 };

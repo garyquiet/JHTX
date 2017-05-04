@@ -107,10 +107,20 @@ void CPresetInfoDlg::OnBnClickedQueryPresetInfoButton()
 	// TODO: 在此添加控件通知处理程序代码
 	CPresetInfoQueryDlg dlg;
 
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
 	int ret = dlg.DoModal();
 
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
 	}
 }
 
@@ -119,10 +129,20 @@ void CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton()
 	// TODO: 在此添加控件通知处理程序代码
 	CPresetInfoMaintainDlg dlg;
 
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
 	int ret = dlg.DoModal();
 
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
 	}
 }
 

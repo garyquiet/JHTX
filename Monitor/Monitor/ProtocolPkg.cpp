@@ -230,20 +230,29 @@ map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
 }
 
 //解析模式报告
-void CProtocolPkg::ParseMOD(CString content){
+CString CProtocolPkg::ParseMOD(CString content){
 	/*
 	{“当前模式:xxxx”}
 	{“切换至:xxxxxx”}
 
 	*/
+	CString str = L"";
+	int begin = search(content, L"“");
+	int end = search(content, L"”");
+	CString info = content.Mid(begin + 1, end - begin - 1);
+	str = info;
+
+	return str;
 }
 
 //解析同步报文
-void CProtocolPkg::ParseOUT(CString content){
+CString CProtocolPkg::ParseOUT(CString content){
 	/*
 	{“>>>hh:mm:ss,RNSS未定位”}
 	{“>>>hh:mm:ss,RNSS已定位，卫星数:xx颗”}
 	*/
+	CString str = L"";
+	return str;
 }
 
 //判断是否是数字

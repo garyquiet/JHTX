@@ -9,6 +9,7 @@
 #include "PresetInfoDlg.h"
 #include "SystemSettingDlg.h"
 #include "SaveSettingDlg.h"
+#include "WorkingModeDlg.h"
 
 
 #ifdef _DEBUG
@@ -39,6 +40,7 @@ BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
 	ON_BN_CLICKED(IDC_PRESET_INFO_BUTTON, &CMonitorDlg::OnBnClickedPresetInfoButton)
 	ON_BN_CLICKED(IDC_SYSTEM_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSystemSettingButton)
 	ON_BN_CLICKED(IDC_SAVE_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSaveSettingButton)
+	ON_BN_CLICKED(IDC_WORKING_MODE_BUTTON, &CMonitorDlg::OnBnClickedWorkingModeButton)
 END_MESSAGE_MAP()
 
 
@@ -205,10 +207,20 @@ void CMonitorDlg::OnBnClickedPresetInfoButton()
 	// TODO: 在此添加控件通知处理程序代码
 	CPresetInfoDlg dlg;
 
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
 	int ret = dlg.DoModal();
 
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
 	}
 }
 
@@ -217,10 +229,20 @@ void CMonitorDlg::OnBnClickedSystemSettingButton()
 	// TODO: 在此添加控件通知处理程序代码
 	CSystemSettingDlg dlg;
 
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
 	int ret = dlg.DoModal();
 
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
 	}
 }
 
@@ -229,9 +251,42 @@ void CMonitorDlg::OnBnClickedSaveSettingButton()
 	// TODO: 在此添加控件通知处理程序代码
 	CSaveSettingDlg dlg;
 
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
 	int ret = dlg.DoModal();
 
 	if(ret == IDCANCEL || ret == IDOK){
 		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
+	}
+}
+
+void CMonitorDlg::OnBnClickedWorkingModeButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CWorkingModeDlg dlg;
+
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
+		
 	}
 }
