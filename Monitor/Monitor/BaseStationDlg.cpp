@@ -41,6 +41,8 @@ BEGIN_MESSAGE_MAP(CBaseStationDlg, CDialog)
 	ON_EN_CHANGE(IDC_NUMBER_EDIT, &CBaseStationDlg::OnEnChangeNumberEdit)
 	ON_EN_SETFOCUS(IDC_NUMBER_EDIT, &CBaseStationDlg::OnEnSetfocusNumberEdit)
 	ON_EN_KILLFOCUS(IDC_NUMBER_EDIT, &CBaseStationDlg::OnEnKillfocusNumberEdit)
+	ON_WM_CTLCOLOR()
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 
@@ -226,4 +228,65 @@ void CBaseStationDlg::OnEnKillfocusNumberEdit()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	SipShowIM(FALSE);
+}
+
+HBRUSH CBaseStationDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  在此更改 DC 的任何属性
+
+	if(nCtlColor==CTLCOLOR_BTN) //更改按钮颜色
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,255));			//按钮文字黑色
+		pDC->SetBkColor(RGB(186,71,8));		//按钮背景黄色
+		HBRUSH b=CreateSolidBrush(RGB(186,71,8));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_SCROLLBAR) //
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(0,0,0));
+		pDC->SetBkColor(RGB(233,233,220));
+		HBRUSH b=CreateSolidBrush(RGB(233,233,220));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_EDIT) //更改编辑框
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,255));
+		pDC->SetBkColor(RGB(0,255,0));
+		HBRUSH b=CreateSolidBrush(RGB(0,255,0));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_STATIC) //更改静态文本
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,0));
+		pDC->SetBkColor(RGB(0,0,0));			//静态框文字白色
+		HBRUSH b=CreateSolidBrush(RGB(0,0,0));	//静态框背景黑色
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_MSGBOX) //更改对话框背景色
+	{
+		pDC->SetTextColor(RGB(0,0,0));
+		pDC->SetBkColor(RGB(166,254,1));
+		HBRUSH b=CreateSolidBrush(RGB(166,254,1));
+		return b;
+	}
+
+	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
+	return hbr;
+}
+
+void CBaseStationDlg::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	// TODO: 在此处添加消息处理程序代码
+	// 不为绘图消息调用 CDialog::OnPaint()
+
+	CRect rect; 
+	GetClientRect(rect); 
+	dc.FillSolidRect(rect,RGB(0,0,0)); 
 }

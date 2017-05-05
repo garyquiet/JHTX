@@ -48,4 +48,7 @@ private:
 	void Init();
 
 
+public:
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnPaint();
 };

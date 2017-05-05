@@ -22,6 +22,9 @@ protected:
 
 private:
 
+	//初始化
+	void Init();
+
 	//显示串口连接状态
 	void ShowConnectionStatus();
 
@@ -39,4 +42,6 @@ public:
 	afx_msg void OnBnClickedMaintainPresetInfoButton();
 
 	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnPaint();
 };

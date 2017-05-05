@@ -63,4 +63,6 @@ public:
 	afx_msg void OnBnClickedWorkingModeButton();
 	afx_msg void OnBnClickedBaseStationButton();
 	afx_msg void OnBnClickedSpecialCodeButton();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnPaint();
 };

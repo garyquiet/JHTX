@@ -34,10 +34,36 @@ BEGIN_MESSAGE_MAP(CPresetInfoDlg, CDialog)
 
 	ON_BN_CLICKED(IDC_QUERY_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedQueryPresetInfoButton)
 	ON_BN_CLICKED(IDC_MAINTAIN_PRESET_INFO_BUTTON, &CPresetInfoDlg::OnBnClickedMaintainPresetInfoButton)
+	ON_WM_CTLCOLOR()
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 
 // CPresetInfoDlg 消息处理程序
+
+//初始化
+void CPresetInfoDlg::Init(){
+	CFont * f; 
+	f = new CFont; 
+	f->CreateFont(18, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_BOLD, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+	GetDlgItem(IDC_QUERY_PRESET_INFO_BUTTON)->SetFont(f);
+	GetDlgItem(IDC_MAINTAIN_PRESET_INFO_BUTTON)->SetFont(f);
+	//GetDlgItem(IDCANCEL)->SetFont(f);
+
+}
 
 //显示串口连接状态
 void CPresetInfoDlg::ShowConnectionStatus(){
@@ -75,6 +101,8 @@ BOOL CPresetInfoDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
+	Init();
+
 	ShowBatteryPower();
 	ShowConnectionStatus();
 	ShowSystemTime();
@@ -162,4 +190,64 @@ LRESULT CPresetInfoDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	str += _T("\r\n");
 
 	return 1;
+}
+HBRUSH CPresetInfoDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  在此更改 DC 的任何属性
+
+	if(nCtlColor==CTLCOLOR_BTN) //更改按钮颜色
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,255));			//按钮文字黑色
+		pDC->SetBkColor(RGB(186,71,8));		//按钮背景黄色
+		HBRUSH b=CreateSolidBrush(RGB(186,71,8));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_SCROLLBAR) //
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(0,0,0));
+		pDC->SetBkColor(RGB(233,233,220));
+		HBRUSH b=CreateSolidBrush(RGB(233,233,220));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_EDIT) //更改编辑框
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,255));
+		pDC->SetBkColor(RGB(0,255,0));
+		HBRUSH b=CreateSolidBrush(RGB(0,255,0));
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_STATIC) //更改静态文本
+	{
+		//pDC->SetBkMode(TRANSPARENT);
+		pDC->SetTextColor(RGB(255,255,0));
+		pDC->SetBkColor(RGB(0,0,0));			//静态框文字白色
+		HBRUSH b=CreateSolidBrush(RGB(0,0,0));	//静态框背景黑色
+		return b;
+	}
+	else if(nCtlColor==CTLCOLOR_MSGBOX) //更改对话框背景色
+	{
+		pDC->SetTextColor(RGB(0,0,0));
+		pDC->SetBkColor(RGB(166,254,1));
+		HBRUSH b=CreateSolidBrush(RGB(166,254,1));
+		return b;
+	}
+
+	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
+	return hbr;
+}
+
+void CPresetInfoDlg::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	// TODO: 在此处添加消息处理程序代码
+	// 不为绘图消息调用 CDialog::OnPaint()
+
+	CRect rect; 
+	GetClientRect(rect); 
+	dc.FillSolidRect(rect,RGB(0,0,0)); 
 }
