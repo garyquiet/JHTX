@@ -50,7 +50,7 @@ void CPresetInfoDlg::Init(){
 		0, // nEscapement 
 		0, // nOrientation 
 		FW_BOLD, // nWeight 
-		FALSE, // bItalic 
+		TRUE, // bItalic 
 		FALSE, // bUnderline 
 		0, // cStrikeOut 
 		ANSI_CHARSET, // nCharSet 
