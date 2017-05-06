@@ -5,6 +5,7 @@
 #include "Monitor.h"
 #include "SystemSettingDlg.h"
 
+#include "HelpAndVersionDlg.h"
 
 // CSystemSettingDlg 对话框
 
@@ -36,6 +37,7 @@ BEGIN_MESSAGE_MAP(CSystemSettingDlg, CDialog)
 	ON_WM_TIMER()
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_VERSION_BUTTON, &CSystemSettingDlg::OnBnClickedVersionButton)
 END_MESSAGE_MAP()
 
 
@@ -45,10 +47,10 @@ END_MESSAGE_MAP()
 void CSystemSettingDlg::ShowConnectionStatus(){
 	CString str = L"";
 
-	if(theApp.m_Com.IsOpen())
+	if(theApp.m_IsComConnected)
 		str = (L"串口连接:连接");
 	else
-		str = str = (L"串口连接:断开");
+		str = str = (L"串口连接:未连接");
 	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
 }
 
@@ -292,4 +294,26 @@ void CSystemSettingDlg::OnPaint()
 	CRect rect; 
 	GetClientRect(rect); 
 	dc.FillSolidRect(rect,RGB(0,0,0));
+}
+
+void CSystemSettingDlg::OnBnClickedVersionButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CHelpAndVersionDlg dlg;
+
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
+	}
 }

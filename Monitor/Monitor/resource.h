@@ -12,6 +12,7 @@
 #define IDD_L1_GZMS_DIALOG              108
 #define IDD_L1_BCSZ_DIALOG              109
 #define IDD_L1_XTSZ_DIALOG              110
+#define IDD_L2_XTSZ_HELP_VERSION_DIALOG 111
 #define IDR_MAINFRAME                   128
 #define IDB_EMPTY_BITMAP                129
 #define IDB_FULL_BITMAP                 130
@@ -52,6 +53,7 @@
 #define IDC_NUMBER_EDIT                 1028
 #define IDC_SET_BUTTON                  1029
 #define IDC_MODE_COMBO                  1030
+#define IDC_VERSION_BUTTON              1030
 #define IDC_DATETIMEPICKER              1032
 #define IDC_HOUR_COMBO                  1033
 #define IDC_MINUTE_COMBO                1034
@@ -61,6 +63,10 @@
 #define IDC_STATIC_RET_STUTAS           1038
 #define IDC_COMPLETE__STUTAS_STATIC     1039
 #define IDC_COMPLETE_STUTAS_STATIC      1040
+#define IDC_VERSION                     1041
+#define IDC_NUMBER_REPEAT_EDIT          1042
+#define IDC_HELP_STATIC                 1043
+#define IDC_BUTTON1                     1044
 #define IDC_RESULT_STUTAS_STATIC        65535
 
 // Next default values for new objects
@@ -69,7 +75,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1041
+#define _APS_NEXT_CONTROL_VALUE         1045
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

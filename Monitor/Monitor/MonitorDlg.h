@@ -49,6 +49,9 @@ private:
 	//显示电量
 	void ShowBatteryPower();
 
+	//设置提示信息
+	void SetTipInfo(CString tip);
+
 private:
 	//CnComm _Com;	//串口
 

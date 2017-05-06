@@ -22,6 +22,7 @@ class CMonitorApp : public CWinApp
 public:
 	CMonitorApp();
 	
+	BOOL m_IsComConnected;
 // 重写
 public:
 	virtual BOOL InitInstance();
@@ -31,6 +32,10 @@ public:
 	CnComm m_Com;	//串口
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	//系统自检测
+	BOOL SelfCheck();
 };
 
 extern CMonitorApp theApp;

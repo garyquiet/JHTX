@@ -15,6 +15,7 @@ CBaseStationDlg::CBaseStationDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CBaseStationDlg::IDD, pParent)
 	, m_strQueryResult(_T(""))
 	, m_strBaseCenterNo(_T(""))
+	, m_strBaseCenterNoRepeat(_T(""))
 {
 
 }
@@ -29,6 +30,8 @@ void CBaseStationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RESULT_EDIT, m_strQueryResult);
 	DDX_Text(pDX, IDC_NUMBER_EDIT, m_strBaseCenterNo);
 	DDV_MaxChars(pDX, m_strBaseCenterNo, 7);
+	DDX_Text(pDX, IDC_NUMBER_REPEAT_EDIT, m_strBaseCenterNoRepeat);
+	DDV_MaxChars(pDX, m_strBaseCenterNoRepeat, 7);
 }
 
 
@@ -43,6 +46,9 @@ BEGIN_MESSAGE_MAP(CBaseStationDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_NUMBER_EDIT, &CBaseStationDlg::OnEnKillfocusNumberEdit)
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_EN_CHANGE(IDC_NUMBER_REPEAT_EDIT, &CBaseStationDlg::OnEnChangeNumberRepeatEdit)
+	ON_EN_SETFOCUS(IDC_NUMBER_REPEAT_EDIT, &CBaseStationDlg::OnEnSetfocusNumberRepeatEdit)
+	ON_EN_KILLFOCUS(IDC_NUMBER_REPEAT_EDIT, &CBaseStationDlg::OnEnKillfocusNumberRepeatEdit)
 END_MESSAGE_MAP()
 
 
@@ -148,18 +154,25 @@ void CBaseStationDlg::OnBnClickedSetButton()
 
 	if (m_strBaseCenterNo.Trim().GetLength() > 0)
 	{
-
-		DWORD len = CProtocolPkg::SendIDCFGPacket(IDCFG, IDCFG_CfgID_SET, m_strBaseCenterNo.Trim());
-
-		if (len > 0)
+		if (m_strBaseCenterNo.Trim() == m_strBaseCenterNoRepeat.Trim())
 		{
-			CString tip = L"设置基站中心号码命令发送成功!";
-			SetTipInfo(tip);
+			DWORD len = CProtocolPkg::SendIDCFGPacket(IDCFG, IDCFG_CfgID_SET, m_strBaseCenterNo.Trim());
+
+			if (len > 0)
+			{
+				CString tip = L"设置基站中心号码命令发送成功";
+				SetTipInfo(tip);
+			}
+			else{
+				CString tip = L"设置基站中心号码命令发送失败";
+				SetTipInfo(tip);
+			}
 		}
 		else{
-			CString tip = L"设置基站中心号码命令发送失败!";
-			SetTipInfo(tip);
+			MessageBox(L"两次输入的指挥基站中心号码不一致,请检查!");
+			return;
 		}
+		
 	}
 	else{
 		MessageBox(L"指挥基站中心号码不能为空!");
@@ -289,4 +302,32 @@ void CBaseStationDlg::OnPaint()
 	CRect rect; 
 	GetClientRect(rect); 
 	dc.FillSolidRect(rect,RGB(0,0,0)); 
+}
+
+void CBaseStationDlg::OnEnChangeNumberRepeatEdit()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，则它将不会
+	// 发送该通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	if(m_strBaseCenterNoRepeat.Trim().GetLength() > 0)
+	{
+		m_strBaseCenterNoRepeat = CProtocolPkg::eliminateNonNumber(m_strBaseCenterNoRepeat);
+		UpdateData(FALSE);
+	}
+}
+
+void CBaseStationDlg::OnEnSetfocusNumberRepeatEdit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CBaseStationDlg::OnEnKillfocusNumberRepeatEdit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
 }

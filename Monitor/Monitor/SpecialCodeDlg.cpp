@@ -14,6 +14,7 @@ CSpecialCodeDlg::CSpecialCodeDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CSpecialCodeDlg::IDD, pParent)
 	, m_strQueryResult(_T(""))
 	, m_strSpecialCode(_T(""))
+	, m_strSpecialCodeRepeat(_T(""))
 {
 
 }
@@ -28,6 +29,8 @@ void CSpecialCodeDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RESULT_EDIT, m_strQueryResult);
 	DDX_Text(pDX, IDC_NUMBER_EDIT, m_strSpecialCode);
 	DDV_MaxChars(pDX, m_strSpecialCode, 3);
+	DDX_Text(pDX, IDC_NUMBER_REPEAT_EDIT, m_strSpecialCodeRepeat);
+	DDV_MaxChars(pDX, m_strSpecialCodeRepeat, 3);
 }
 
 
@@ -42,6 +45,9 @@ BEGIN_MESSAGE_MAP(CSpecialCodeDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_NUMBER_EDIT, &CSpecialCodeDlg::OnEnKillfocusNumberEdit)
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_EN_CHANGE(IDC_NUMBER_REPEAT_EDIT, &CSpecialCodeDlg::OnEnChangeNumberRepeatEdit)
+	ON_EN_SETFOCUS(IDC_NUMBER_REPEAT_EDIT, &CSpecialCodeDlg::OnEnSetfocusNumberRepeatEdit)
+	ON_EN_KILLFOCUS(IDC_NUMBER_REPEAT_EDIT, &CSpecialCodeDlg::OnEnKillfocusNumberRepeatEdit)
 END_MESSAGE_MAP()
 
 
@@ -51,10 +57,10 @@ END_MESSAGE_MAP()
 void CSpecialCodeDlg::ShowConnectionStatus(){
 	CString str = L"";
 
-	if(theApp.m_Com.IsOpen())
+	if(theApp.m_IsComConnected)
 		str = (L"串口连接:连接");
 	else
-		str = str = (L"串口连接:断开");
+		str = str = (L"串口连接:未连接");
 	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
 }
 
@@ -146,18 +152,26 @@ void CSpecialCodeDlg::OnBnClickedSetButton()
 
 	if (m_strSpecialCode.Trim().GetLength() > 0)
 	{
-
-		DWORD len = CProtocolPkg::SendSNCFGPacket(SNCFG, SNCFG_CfgID_SET, m_strSpecialCode.Trim());
-
-		if (len > 0)
+		if(m_strSpecialCode.Trim() == m_strSpecialCodeRepeat.Trim())
 		{
-			CString tip = L"设置特殊编号命令发送成功!";
-			SetTipInfo(tip);
+
+			DWORD len = CProtocolPkg::SendSNCFGPacket(SNCFG, SNCFG_CfgID_SET, m_strSpecialCode.Trim());
+
+			if (len > 0)
+			{
+				CString tip = L"设置特殊编号命令发送成功!";
+				SetTipInfo(tip);
+			}
+			else{
+				CString tip = L"设置特殊编号命令发送失败!";
+				SetTipInfo(tip);
+			}
 		}
 		else{
-			CString tip = L"设置特殊编号命令发送失败!";
-			SetTipInfo(tip);
+			MessageBox(L"两次输入的特殊编号不一致,请检查!");
+			return;
 		}
+		
 	}
 	else{
 		MessageBox(L"特殊编号号码不能为空!");
@@ -285,4 +299,33 @@ void CSpecialCodeDlg::OnPaint()
 	CRect rect; 
 	GetClientRect(rect); 
 	dc.FillSolidRect(rect,RGB(0,0,0)); 
+}
+
+void CSpecialCodeDlg::OnEnChangeNumberRepeatEdit()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，则它将不会
+	// 发送该通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+
+	UpdateData(TRUE);
+	if(m_strSpecialCodeRepeat.Trim().GetLength() > 0)
+	{
+		m_strSpecialCodeRepeat = CProtocolPkg::eliminateNonNumber(m_strSpecialCodeRepeat);
+		UpdateData(FALSE);
+	}
+}
+
+void CSpecialCodeDlg::OnEnSetfocusNumberRepeatEdit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CSpecialCodeDlg::OnEnKillfocusNumberRepeatEdit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
 }

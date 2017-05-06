@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HelpAndVersionDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Monitor.cpp"
 				>
 			</File>
@@ -272,6 +276,10 @@
 			</File>
 			<File
 				RelativePath=".\const.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HelpAndVersionDlg.h"
 				>
 			</File>
 			<File

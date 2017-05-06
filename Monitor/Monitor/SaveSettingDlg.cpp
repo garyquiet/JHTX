@@ -44,10 +44,10 @@ END_MESSAGE_MAP()
 void CSaveSettingDlg::ShowConnectionStatus(){
 	CString str = L"";
 
-	if(theApp.m_Com.IsOpen())
+	if(theApp.m_IsComConnected)
 		str = (L"串口连接:连接");
 	else
-		str = str = (L"串口连接:断开");
+		str = str = (L"串口连接:未连接");
 	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
 }
 

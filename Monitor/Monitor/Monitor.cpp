@@ -23,6 +23,7 @@ CMonitorApp::CMonitorApp()
 {
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
+	m_IsComConnected = FALSE;
 }
 
 
@@ -30,6 +31,32 @@ CMonitorApp::CMonitorApp()
 CMonitorApp theApp;
 
 // CMonitorApp 初始化
+
+
+BOOL CMonitorApp::SelfCheck(){
+	SYSTEM_POWER_STATUS_EX2 spsCurrent; 
+	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
+	
+	if( BATTERY_FLAG_LOW == spsCurrent.BatteryFlag){
+		AfxMessageBox(L"电池电量过低!");
+	}
+
+	if (!m_Com.IsOpen())
+	{
+		if (!m_Com.Open(COM_PORT, BAUD_RATE))
+		{
+			TCHAR szBuf[1024];
+			wsprintf(szBuf, _T("打开 COM%d 失败, 错误代码:%d"), COM_PORT, GetLastError());
+			AfxMessageBox(szBuf);
+			return FALSE;
+		}
+		else
+		{	
+			return TRUE;
+		}
+	}
+	return TRUE;
+}
 
 BOOL CMonitorApp::InitInstance()
 {
@@ -43,16 +70,17 @@ BOOL CMonitorApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
-	CMonitorDlg dlg;
-	m_pMainWnd = &dlg;
-
-	
-
-	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
+	if(TRUE == SelfCheck()) //系统自检成功
 	{
-		// TODO: 在此处放置处理何时用“确定”来关闭
-		//  对话框的代码
+		CMonitorDlg dlg;
+		m_pMainWnd = &dlg;
+
+		INT_PTR nResponse = dlg.DoModal();
+		if (nResponse == IDOK)
+		{
+			// TODO: 在此处放置处理何时用“确定”来关闭
+			//  对话框的代码
+		}
 	}
 
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，

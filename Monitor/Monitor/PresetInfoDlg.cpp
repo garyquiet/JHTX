@@ -45,12 +45,12 @@ END_MESSAGE_MAP()
 void CPresetInfoDlg::Init(){
 	CFont * f; 
 	f = new CFont; 
-	f->CreateFont(18, // nHeight 
+	f->CreateFont(19, // nHeight 
 		0, // nWidth 
 		0, // nEscapement 
 		0, // nOrientation 
 		FW_BOLD, // nWeight 
-		TRUE, // bItalic 
+		FALSE, // bItalic 
 		FALSE, // bUnderline 
 		0, // cStrikeOut 
 		ANSI_CHARSET, // nCharSet 
@@ -61,7 +61,7 @@ void CPresetInfoDlg::Init(){
 		_T("宋体")); // lpszFac 
 	GetDlgItem(IDC_QUERY_PRESET_INFO_BUTTON)->SetFont(f);
 	GetDlgItem(IDC_MAINTAIN_PRESET_INFO_BUTTON)->SetFont(f);
-	//GetDlgItem(IDCANCEL)->SetFont(f);
+	GetDlgItem(IDCANCEL)->SetFont(f);
 
 }
 
@@ -69,10 +69,10 @@ void CPresetInfoDlg::Init(){
 void CPresetInfoDlg::ShowConnectionStatus(){
 	CString str = L"";
 
-	if(theApp.m_Com.IsOpen())
+	if(theApp.m_IsComConnected)
 		str = (L"串口连接:连接");
 	else
-		str = str = (L"串口连接:断开");
+		str = str = (L"串口连接:未连接");
 	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
 }
 
@@ -191,6 +191,7 @@ LRESULT CPresetInfoDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 
 	return 1;
 }
+
 HBRUSH CPresetInfoDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);

@@ -6,6 +6,7 @@
 #include "MonitorDlg.h"
 #include "SplashWnd.h"
 
+#include "ProtocolPkg.h"
 #include "PresetInfoDlg.h"
 #include "SystemSettingDlg.h"
 #include "SaveSettingDlg.h"
@@ -89,7 +90,7 @@ void CMonitorDlg::OnSize(UINT /*nType*/, int /*cx*/, int /*cy*/)
 BOOL CMonitorDlg::Init(){
 	CFont * f; 
 	f = new CFont; 
-	f->CreateFont(18, // nHeight 
+	f->CreateFont(19, // nHeight 
 		0, // nWidth 
 		0, // nEscapement 
 		0, // nOrientation 
@@ -110,46 +111,53 @@ BOOL CMonitorDlg::Init(){
 	GetDlgItem(IDC_SAVE_SETTING_BUTTON)->SetFont(f);
 	GetDlgItem(IDC_SYSTEM_SETTING_BUTTON)->SetFont(f);
 
-	ShowConnectionStatus();
+	theApp.m_Com.SetWnd(this->m_hWnd);
+
 	ShowSystemTime();
 	ShowBatteryPower();
-	if (!theApp.m_Com.IsOpen())
-	{
-		//if (!Com_.Open(m_uPort+1))
-		if (!theApp.m_Com.Open(COM_PORT, BAUD_RATE))
-		{
-			TCHAR szBuf[1024];
-			wsprintf(szBuf, _T("打开 COM%d 失败, 代码:%d"), COM_PORT, GetLastError());
-			MessageBox(szBuf);
-			((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(FALSE);
-			((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(FALSE);
-			return FALSE;
-		}
-		else
-		{
-			//SendDlgItemMessage(IDC_BUTTON_OPEN, WM_SETTEXT, 0, (LPARAM)_T("关闭"));
-			//m_Lamp.SetIcon(hIcons[1], FALSE);
-			//AfxMessageBox(L"打开成功");
-			((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(TRUE);
-			((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(TRUE);
-			
-			//HBITMAP hBmp = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_CONNECT_BITMAP));  // 将位图IDB_BITMAP1加载到bitmap   
-			//m_statusPic.SetBitmap(hBmp);
+	ShowConnectionStatus();
 
-			theApp.m_Com.SetWnd(this->m_hWnd);
-			SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
-			SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+	//if (!theApp.m_Com.IsOpen())
+	//{
+	//	//if (!Com_.Open(m_uPort+1))
+	//	if (!theApp.m_Com.Open(COM_PORT, BAUD_RATE))
+	//	{
+	//		TCHAR szBuf[1024];
+	//		wsprintf(szBuf, _T("打开 COM%d 失败, 代码:%d"), COM_PORT, GetLastError());
+	//		MessageBox(szBuf);
+	//		((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(FALSE);
+	//		((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(FALSE);
+	//		((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(FALSE);
+	//		((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(FALSE);
+	//		((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(FALSE);
+	//		return FALSE;
+	//	}
+	//	else
+	//	{
+	//		//SendDlgItemMessage(IDC_BUTTON_OPEN, WM_SETTEXT, 0, (LPARAM)_T("关闭"));
+	//		//m_Lamp.SetIcon(hIcons[1], FALSE);
+	//		//AfxMessageBox(L"打开成功");
+	//		((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(TRUE);
+	//		((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(TRUE);
+	//		((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(TRUE);
+	//		((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(TRUE);
+	//		((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(TRUE);
+	//		
+	//		//HBITMAP hBmp = ::LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_CONNECT_BITMAP));  // 将位图IDB_BITMAP1加载到bitmap   
+	//		//m_statusPic.SetBitmap(hBmp);
+
+	//		theApp.m_Com.SetWnd(this->m_hWnd);
+	//		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+	//		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+	//		
+	//		return TRUE;
+	//	}
+	//}
 			
-			return TRUE;
-		}
-	}
-			
+	SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+	SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+	SetTimer(TIMER_EVENT_COM_STATUS, TIME_INTERVAL_TEN_SECONDS, NULL);
+
 	return TRUE;
 }
 
@@ -181,18 +189,46 @@ LRESULT CMonitorDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	str += sbuf;
 	str += _T("\r\n");
 
+	CString tip = CProtocolPkg::ParseMOD(str);
+	
+	if( wcsstr(tip, L"当前模式") )
+	{
+		SetDlgItemText(IDC_STATIC_COM_STATUS, L"串口连接:连接");
+		theApp.m_IsComConnected = TRUE;
+
+		KillTimer(TIMER_EVENT_COM_STATUS);
+		((CButton*)GetDlgItem(IDC_PRESET_INFO_BUTTON))->EnableWindow(TRUE);
+		((CButton*)GetDlgItem(IDC_WORKING_MODE_BUTTON))->EnableWindow(TRUE);
+		((CButton*)GetDlgItem(IDC_BASE_STATION_BUTTON))->EnableWindow(TRUE);
+		((CButton*)GetDlgItem(IDC_SPECIAL_CODE_BUTTON))->EnableWindow(TRUE);
+		((CButton*)GetDlgItem(IDC_SAVE_SETTING_BUTTON))->EnableWindow(TRUE);
+	}
+
 	return 1;
 }
 
 //显示串口连接状态
 void CMonitorDlg::ShowConnectionStatus(){
-	CString str = L"";
+	/*CString str = L"";
 
 	if(theApp.m_Com.IsOpen())
 		str = (L"串口连接:连接");
 	else
 		str = str = (L"串口连接:断开");
-	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);
+	((CStatic*)GetDlgItem(IDC_STATIC_COM_STATUS))->SetWindowText(str);*/
+
+	DWORD len;
+
+	len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_QUERY);
+
+	if (len > 0)
+	{
+		CString tip = L"查询工作模式命令发送成功!";
+		SetTipInfo(tip);
+	}else{
+		CString tip = L"查询工作模式命令发送失败!";
+		SetTipInfo(tip);
+	}
 }
 
 //显示系统时间
@@ -215,17 +251,31 @@ void CMonitorDlg::ShowBatteryPower(){
 }
 
 
+//设置提示信息
+void CMonitorDlg::SetTipInfo(CString tip){
+	CTime tm = CTime::GetCurrentTime();
+	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	CString time = tm.Format(L"%H:%M:%S");
+	CString info = L"";
+	info.Format(L"%s  %s",time, tip);
+	SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
+}
+
+
 void CMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
 	if (nIDEvent == TIMER_EVENT_DATETIME)
 	{
-		ShowConnectionStatus();
 		ShowSystemTime();
 	}
 	else if(nIDEvent == TIMER_EVENT_POWER){
 		ShowBatteryPower();		
+	}
+	else if (nIDEvent == TIMER_EVENT_COM_STATUS)
+	{
+		ShowConnectionStatus();
 	}
 
 	CDialog::OnTimer(nIDEvent);

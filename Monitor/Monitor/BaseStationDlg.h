@@ -49,4 +49,9 @@ public:
 	afx_msg void OnEnKillfocusNumberEdit();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnPaint();
+	// 重复输入的指挥基站中心号码
+	CString m_strBaseCenterNoRepeat;
+	afx_msg void OnEnChangeNumberRepeatEdit();
+	afx_msg void OnEnSetfocusNumberRepeatEdit();
+	afx_msg void OnEnKillfocusNumberRepeatEdit();
 };
