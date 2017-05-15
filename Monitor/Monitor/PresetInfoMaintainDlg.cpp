@@ -15,10 +15,10 @@ IMPLEMENT_DYNAMIC(CPresetInfoMaintainDlg, CDialog)
 CPresetInfoMaintainDlg::CPresetInfoMaintainDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPresetInfoMaintainDlg::IDD, pParent)
 	
-	, m_strPresetInfoForAdd(_T(""))
+	//, m_strPresetInfoForAdd(_T(""))
 	, m_strPresetInfoForModify(_T(""))
 	, m_iPresetInfoNoForModify(1)
-	, m_iPresetInfoNoForDelete(1)
+	//, m_iPresetInfoNoForDelete(1)
 {
 
 }
@@ -31,14 +31,14 @@ void CPresetInfoMaintainDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
-	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_ADD, m_strPresetInfoForAdd);
-	DDV_MaxChars(pDX, m_strPresetInfoForAdd, 8);
+	//DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_ADD, m_strPresetInfoForAdd);
+	//DDV_MaxChars(pDX, m_strPresetInfoForAdd, 8);
 	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_MODIFY, m_strPresetInfoForModify);
 	DDV_MaxChars(pDX, m_strPresetInfoForModify, 8);
 	DDX_Text(pDX, IDC_INFOR_NO_EDIT_FOR_MODIFY, m_iPresetInfoNoForModify);
 	DDV_MinMaxUInt(pDX, m_iPresetInfoNoForModify, 1, 30);
-	DDX_Text(pDX, IDC_INFO_NO_EDIT_FOR_DELETE, m_iPresetInfoNoForDelete);
-	DDV_MinMaxUInt(pDX, m_iPresetInfoNoForDelete, 1, 30);
+	//DDX_Text(pDX, IDC_INFO_NO_EDIT_FOR_DELETE, m_iPresetInfoNoForDelete);
+	//DDV_MinMaxUInt(pDX, m_iPresetInfoNoForDelete, 1, 30);
 }
 
 
@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_INFO_NO_EDIT_FOR_DELETE, &CPresetInfoMaintainDlg::OnEnKillfocusInfoNoEditForDelete)
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_EN_CHANGE(IDC_INFOR_NO_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnChangeInforNoEditForModify)
 END_MESSAGE_MAP()
 
 
@@ -144,27 +145,27 @@ void CPresetInfoMaintainDlg::OnTimer(UINT_PTR nIDEvent)
 void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	UpdateData(TRUE);
-
-	if (m_strPresetInfoForAdd.Trim().GetLength() > 0)
+	if(TRUE == UpdateData(TRUE))
 	{
-	
-		DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForAdd.Trim());
-
-		if (len > 0)
+		if (m_strPresetInfoForModify.Trim().GetLength() > 0)
 		{
-			CString tip = L"预置信息增加命令发送成功!";
-			SetTipInfo(tip);
+
+			DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForModify.Trim());
+
+			if (len > 0)
+			{
+				CString tip = L"预置信息增加命令发送成功!";
+				SetTipInfo(tip);
+			}
+			else{
+				CString tip = L"预置信息增加命令发送失败!";
+				SetTipInfo(tip);
+			}
 		}
 		else{
-			CString tip = L"预置信息增加命令发送失败!";
-			SetTipInfo(tip);
+			MessageBox(L"预置信息不能为空!");
 		}
 	}
-	else{
-		MessageBox(L"预置信息不能为空!");
-	}
-
 }
 
 void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd()
@@ -177,14 +178,14 @@ void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd()
 	// TODO:  在此添加控件通知处理程序代码
 
 	UpdateData(TRUE);
-	if(m_strPresetInfoForAdd.Trim().GetLength() > 0)
+	if(m_strPresetInfoForModify.Trim().GetLength() > 0)
 	{
 		/*BOOL ret = CProtocolPkg::isHanZi(m_strPresetInfoForAdd.GetAt(m_strPresetInfoForAdd.GetLength() - 1));
 		if (ret == FALSE)
 		{
 			m_strPresetInfoForAdd.Delete(m_strPresetInfoForAdd.GetLength() - 1, 1);
 		}*/
-		m_strPresetInfoForAdd = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForAdd);
+		m_strPresetInfoForModify = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForModify);
 		UpdateData(FALSE);
 
 		/*int nLength = m_strPresetInfoForAdd.GetLength();
@@ -274,7 +275,7 @@ void CPresetInfoMaintainDlg::OnBnClickedDeleteButton()
 	if(TRUE == UpdateData(TRUE)){
 
 		CString tmp = L"";
-		tmp.Format(L"%d", m_iPresetInfoNoForDelete);
+		tmp.Format(L"%d", m_iPresetInfoNoForModify);
 		DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_DELETE, tmp, ANY);
 
 		if (len > 0)
@@ -396,4 +397,20 @@ void CPresetInfoMaintainDlg::OnPaint()
 	CRect rect; 
 	GetClientRect(rect); 
 	dc.FillSolidRect(rect,RGB(0,0,0)); 
+}
+
+void CPresetInfoMaintainDlg::OnEnChangeInforNoEditForModify()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，则它将不会
+	// 发送该通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+	/*UpdateData(TRUE);
+	if(m_iPresetInfoNoForModify.Trim().GetLength() > 0)
+	{
+		m_iPresetInfoNoForModify = CProtocolPkg::eliminateNonNumber(m_iPresetInfoNoForModify);
+		UpdateData(FALSE);
+	}*/
 }

@@ -40,7 +40,7 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedAddButton();
 	
-	CString m_strPresetInfoForAdd;
+	//CString m_strPresetInfoForAdd;
 	afx_msg void OnEnChangeInfoContentEditForAdd();
 	afx_msg LRESULT OnComRecv(WPARAM, LPARAM);
 	afx_msg void OnBnClickedCancel();
@@ -50,7 +50,7 @@ public:
 	afx_msg void OnBnClickedModifyButton();
 	// ‘§÷√–≈œ¢±‡∫≈
 	UINT m_iPresetInfoNoForModify;
-	UINT m_iPresetInfoNoForDelete;
+	//UINT m_iPresetInfoNoForDelete;
 	afx_msg void OnBnClickedDeleteButton();
 	afx_msg void OnEnSetfocusInfoContentEditForAdd();
 	afx_msg void OnEnKillfocusInfoContentEditForAdd();
@@ -62,4 +62,5 @@ public:
 	afx_msg void OnEnKillfocusInfoNoEditForDelete();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnPaint();
+	afx_msg void OnEnChangeInforNoEditForModify();
 };
