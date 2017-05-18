@@ -7,6 +7,7 @@
 #include "SplashWnd.h"
 
 #include "PresetInfoDlg.h"
+#include "SystemSettingDlg.h"
 
 
 #ifdef _DEBUG
@@ -34,6 +35,7 @@ BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_PRESET_INFO_BUTTON, &CMonitorDlg::OnBnClickedPresetInfoButton)
+	ON_BN_CLICKED(IDC_SYSTEM_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSystemSettingButton)
 END_MESSAGE_MAP()
 
 
@@ -182,6 +184,18 @@ void CMonitorDlg::OnBnClickedPresetInfoButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CPresetInfoDlg dlg;
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+	}
+}
+
+void CMonitorDlg::OnBnClickedSystemSettingButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CSystemSettingDlg dlg;
 
 	int ret = dlg.DoModal();
 

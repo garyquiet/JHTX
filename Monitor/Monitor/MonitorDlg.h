@@ -56,4 +56,5 @@ public:
 	
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedPresetInfoButton();
+	afx_msg void OnBnClickedSystemSettingButton();
 };

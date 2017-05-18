@@ -236,6 +236,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\SystemSettingDlg.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -284,6 +288,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SystemSettingDlg.h"
 				>
 			</File>
 		</Filter>
