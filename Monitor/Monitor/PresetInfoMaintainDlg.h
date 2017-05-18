@@ -52,4 +52,12 @@ public:
 	UINT m_iPresetInfoNoForModify;
 	UINT m_iPresetInfoNoForDelete;
 	afx_msg void OnBnClickedDeleteButton();
+	afx_msg void OnEnSetfocusInfoContentEditForAdd();
+	afx_msg void OnEnKillfocusInfoContentEditForAdd();
+	afx_msg void OnEnSetfocusInforNoEditForModify();
+	afx_msg void OnEnKillfocusInforNoEditForModify();
+	afx_msg void OnEnSetfocusInfoContentEditForModify();
+	afx_msg void OnEnKillfocusInfoContentEditForModify();
+	afx_msg void OnEnSetfocusInfoNoEditForDelete();
+	afx_msg void OnEnKillfocusInfoNoEditForDelete();
 };

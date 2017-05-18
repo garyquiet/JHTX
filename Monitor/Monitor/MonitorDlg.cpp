@@ -10,6 +10,8 @@
 #include "SystemSettingDlg.h"
 #include "SaveSettingDlg.h"
 #include "WorkingModeDlg.h"
+#include "BaseStationDlg.h"
+#include "SpecialCodeDlg.h"
 
 
 #ifdef _DEBUG
@@ -41,6 +43,8 @@ BEGIN_MESSAGE_MAP(CMonitorDlg, CDialog)
 	ON_BN_CLICKED(IDC_SYSTEM_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSystemSettingButton)
 	ON_BN_CLICKED(IDC_SAVE_SETTING_BUTTON, &CMonitorDlg::OnBnClickedSaveSettingButton)
 	ON_BN_CLICKED(IDC_WORKING_MODE_BUTTON, &CMonitorDlg::OnBnClickedWorkingModeButton)
+	ON_BN_CLICKED(IDC_BASE_STATION_BUTTON, &CMonitorDlg::OnBnClickedBaseStationButton)
+	ON_BN_CLICKED(IDC_SPECIAL_CODE_BUTTON, &CMonitorDlg::OnBnClickedSpecialCodeButton)
 END_MESSAGE_MAP()
 
 
@@ -202,6 +206,8 @@ void CMonitorDlg::OnTimer(UINT_PTR nIDEvent)
 	CDialog::OnTimer(nIDEvent);
 }
 
+
+//弹出预置信息对话框
 void CMonitorDlg::OnBnClickedPresetInfoButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -224,6 +230,8 @@ void CMonitorDlg::OnBnClickedPresetInfoButton()
 	}
 }
 
+
+//弹出系统设置对话框
 void CMonitorDlg::OnBnClickedSystemSettingButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -246,6 +254,8 @@ void CMonitorDlg::OnBnClickedSystemSettingButton()
 	}
 }
 
+
+//弹出保存设置对话框
 void CMonitorDlg::OnBnClickedSaveSettingButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -268,6 +278,8 @@ void CMonitorDlg::OnBnClickedSaveSettingButton()
 	}
 }
 
+
+//弹出工作模式对话框
 void CMonitorDlg::OnBnClickedWorkingModeButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -288,5 +300,56 @@ void CMonitorDlg::OnBnClickedWorkingModeButton()
 		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
 #endif
 		
+	}
+}
+
+
+//弹出指挥基站对话框
+void CMonitorDlg::OnBnClickedBaseStationButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	CBaseStationDlg dlg;
+
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
+
+	}
+}
+
+
+//弹出特殊编号对话框
+void CMonitorDlg::OnBnClickedSpecialCodeButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CSpecialCodeDlg dlg;
+
+#if defined(OPTIMIZATION)
+	KillTimer(TIMER_EVENT_DATETIME);
+	KillTimer(TIMER_EVENT_POWER);
+#endif
+
+	int ret = dlg.DoModal();
+
+	if(ret == IDCANCEL || ret == IDOK){
+		theApp.m_Com.SetWnd(this->m_hWnd);
+
+#if defined(OPTIMIZATION)
+		SetTimer(TIMER_EVENT_DATETIME,TIME_INTERVAL_SENCOND, NULL);
+		SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
+#endif
+
 	}
 }

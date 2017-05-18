@@ -52,6 +52,14 @@ BEGIN_MESSAGE_MAP(CPresetInfoMaintainDlg, CDialog)
 	ON_EN_CHANGE(IDC_INFO_CONTENT_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForModify)
 	ON_BN_CLICKED(IDC_MODIFY_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedModifyButton)
 	ON_BN_CLICKED(IDC_DELETE_BUTTON, &CPresetInfoMaintainDlg::OnBnClickedDeleteButton)
+	ON_EN_SETFOCUS(IDC_INFO_CONTENT_EDIT_FOR_ADD, &CPresetInfoMaintainDlg::OnEnSetfocusInfoContentEditForAdd)
+	ON_EN_KILLFOCUS(IDC_INFO_CONTENT_EDIT_FOR_ADD, &CPresetInfoMaintainDlg::OnEnKillfocusInfoContentEditForAdd)
+	ON_EN_SETFOCUS(IDC_INFOR_NO_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnSetfocusInforNoEditForModify)
+	ON_EN_KILLFOCUS(IDC_INFOR_NO_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnKillfocusInforNoEditForModify)
+	ON_EN_SETFOCUS(IDC_INFO_CONTENT_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnSetfocusInfoContentEditForModify)
+	ON_EN_KILLFOCUS(IDC_INFO_CONTENT_EDIT_FOR_MODIFY, &CPresetInfoMaintainDlg::OnEnKillfocusInfoContentEditForModify)
+	ON_EN_SETFOCUS(IDC_INFO_NO_EDIT_FOR_DELETE, &CPresetInfoMaintainDlg::OnEnSetfocusInfoNoEditForDelete)
+	ON_EN_KILLFOCUS(IDC_INFO_NO_EDIT_FOR_DELETE, &CPresetInfoMaintainDlg::OnEnKillfocusInfoNoEditForDelete)
 END_MESSAGE_MAP()
 
 
@@ -278,4 +286,52 @@ void CPresetInfoMaintainDlg::OnBnClickedDeleteButton()
 		}
 	}
 	
+}
+
+void CPresetInfoMaintainDlg::OnEnSetfocusInfoContentEditForAdd()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CPresetInfoMaintainDlg::OnEnKillfocusInfoContentEditForAdd()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
+}
+
+void CPresetInfoMaintainDlg::OnEnSetfocusInforNoEditForModify()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CPresetInfoMaintainDlg::OnEnKillfocusInforNoEditForModify()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
+}
+
+void CPresetInfoMaintainDlg::OnEnSetfocusInfoContentEditForModify()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CPresetInfoMaintainDlg::OnEnKillfocusInfoContentEditForModify()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
+}
+
+void CPresetInfoMaintainDlg::OnEnSetfocusInfoNoEditForDelete()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(TRUE);
+}
+
+void CPresetInfoMaintainDlg::OnEnKillfocusInfoNoEditForDelete()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	SipShowIM(FALSE);
 }
