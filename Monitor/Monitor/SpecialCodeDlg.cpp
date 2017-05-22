@@ -193,6 +193,12 @@ void CSpecialCodeDlg::OnEnChangeNumberEdit()
 	{
 		m_strSpecialCode = CProtocolPkg::eliminateNonNumber(m_strSpecialCode);
 		UpdateData(FALSE);
+
+		CString strInfo;
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->GetWindowText(strInfo);
+		int nLength = strInfo.GetLength();
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->SetFocus();
 	}
 }
 
@@ -315,6 +321,12 @@ void CSpecialCodeDlg::OnEnChangeNumberRepeatEdit()
 	{
 		m_strSpecialCodeRepeat = CProtocolPkg::eliminateNonNumber(m_strSpecialCodeRepeat);
 		UpdateData(FALSE);
+
+		CString strInfo;
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->GetWindowText(strInfo);
+		int nLength = strInfo.GetLength();
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->SetFocus();
 	}
 }
 

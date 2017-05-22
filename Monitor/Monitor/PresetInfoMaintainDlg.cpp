@@ -237,6 +237,11 @@ void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForModify()
 	{
 		m_strPresetInfoForModify = CProtocolPkg::eliminateNonHanZi(m_strPresetInfoForModify);
 		UpdateData(FALSE);
+		CString strInfo;
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_MODIFY))->GetWindowText(strInfo);
+		int nLength = strInfo.GetLength();
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_MODIFY))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_MODIFY))->SetFocus();
 	}
 }
 

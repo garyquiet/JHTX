@@ -195,6 +195,11 @@ void CBaseStationDlg::OnEnChangeNumberEdit()
 	{
 		m_strBaseCenterNo = CProtocolPkg::eliminateNonNumber(m_strBaseCenterNo);
 		UpdateData(FALSE);
+		CString strInfo;
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->GetWindowText(strInfo);
+		int nLength = strInfo.GetLength();
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_NUMBER_EDIT))->SetFocus();
 	}
 }
 
@@ -317,6 +322,12 @@ void CBaseStationDlg::OnEnChangeNumberRepeatEdit()
 	{
 		m_strBaseCenterNoRepeat = CProtocolPkg::eliminateNonNumber(m_strBaseCenterNoRepeat);
 		UpdateData(FALSE);
+
+		CString strInfo;
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->GetWindowText(strInfo);
+		int nLength = strInfo.GetLength();
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->SetSel(nLength,nLength, FALSE);
+		((CEdit*)GetDlgItem(IDC_NUMBER_REPEAT_EDIT))->SetFocus();
 	}
 }
 
