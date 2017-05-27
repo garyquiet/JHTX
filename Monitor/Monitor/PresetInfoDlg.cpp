@@ -45,7 +45,7 @@ END_MESSAGE_MAP()
 void CPresetInfoDlg::Init(){
 	CFont * f; 
 	f = new CFont; 
-	f->CreateFont(19, // nHeight 
+	f->CreateFont(28, // nHeight 
 		0, // nWidth 
 		0, // nEscapement 
 		0, // nOrientation 
@@ -62,6 +62,29 @@ void CPresetInfoDlg::Init(){
 	GetDlgItem(IDC_QUERY_PRESET_INFO_BUTTON)->SetFont(f);
 	GetDlgItem(IDC_MAINTAIN_PRESET_INFO_BUTTON)->SetFont(f);
 	GetDlgItem(IDCANCEL)->SetFont(f);
+
+
+	CFont * f2 = new CFont; 
+	f2->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("ËÎÌו")); // lpszFac 
+
+	GetDlgItem(IDC_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f2);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f2);
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f2);
 
 }
 
@@ -80,8 +103,8 @@ void CPresetInfoDlg::ShowConnectionStatus(){
 void CPresetInfoDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 

@@ -67,6 +67,19 @@ BOOL CMonitorDlg::OnInitDialog()
 		return FALSE;
 
 	//ShowSplashWindow();
+
+
+	/*CRect m_FullScreenRect;
+	int nFullWidth=GetSystemMetrics(SM_CXSCREEN);
+	int nFullHeight=GetSystemMetrics(SM_CYSCREEN);
+
+	m_FullScreenRect.left = 0;
+	m_FullScreenRect.top = 0;
+	m_FullScreenRect.right = m_FullScreenRect.left + nFullWidth;
+	m_FullScreenRect.bottom = m_FullScreenRect.top + nFullHeight;
+
+	MoveWindow(0,0,m_FullScreenRect.Width(),m_FullScreenRect.Height(),1); */
+
 	
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -90,7 +103,7 @@ void CMonitorDlg::OnSize(UINT /*nType*/, int /*cx*/, int /*cy*/)
 BOOL CMonitorDlg::Init(){
 	CFont * f; 
 	f = new CFont; 
-	f->CreateFont(19, // nHeight 
+	f->CreateFont(28, // nHeight 
 		0, // nWidth 
 		0, // nEscapement 
 		0, // nOrientation 
@@ -110,6 +123,30 @@ BOOL CMonitorDlg::Init(){
 	GetDlgItem(IDC_SPECIAL_CODE_BUTTON)->SetFont(f);
 	GetDlgItem(IDC_SAVE_SETTING_BUTTON)->SetFont(f);
 	GetDlgItem(IDC_SYSTEM_SETTING_BUTTON)->SetFont(f);
+
+
+	CFont * f2 = new CFont; 
+	f2->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_GROUP_STATIC)->SetFont(f2);
+
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f2);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f2);
 
 	theApp.m_Com.SetWnd(this->m_hWnd);
 
@@ -235,8 +272,8 @@ void CMonitorDlg::ShowConnectionStatus(){
 void CMonitorDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 
@@ -485,6 +522,14 @@ void CMonitorDlg::OnPaint()
 	// TODO: 在此处添加消息处理程序代码
 	// 不为绘图消息调用 CDialog::OnPaint()
 
+
+	/*CRect rc( 0, 0, 4, 8 );
+
+	MapDialogRect( &rc );
+	int baseUnitY = rc.bottom;
+	int baseUnitX = rc.right;
+	TRACE(L"baseUnitX = %d\n", baseUnitX);
+	TRACE(L"baseUnitY = %d\n", baseUnitY);*/
 
 	CRect rect; 
 	GetClientRect(rect); 

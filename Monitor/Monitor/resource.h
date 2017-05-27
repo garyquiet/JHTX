@@ -67,6 +67,20 @@
 #define IDC_NUMBER_REPEAT_EDIT          1042
 #define IDC_HELP_STATIC                 1043
 #define IDC_BUTTON1                     1044
+#define IDC_GROUP_STATIC                1045
+#define IDC_TIMECONTROL_LABEL_STATIC    1046
+#define IDC_TIP_STATIC                  1047
+#define IDC_SELECT_METHOD_STATIC        1048
+#define IDC_QUERY_GROUP_STATIC          1049
+#define IDC_SETTING_GROUP_STATIC        1050
+#define IDC_QUERY_RESULT_STATIC         1051
+#define IDC_SWITCH_MODE_STATIC          1052
+#define IDC_LABEL_STATIC                1053
+#define IDC_LABEL2_STATIC               1054
+#define IDC_INPUT_GROUP_STATIC          1055
+#define IDC_CONTENT_LABEL_STATIC        1056
+#define IDC_NO_LABEL_STATIC             1057
+#define IDC_OPERATE_GROUP_STATIC        1058
 #define IDC_RESULT_STUTAS_STATIC        65535
 
 // Next default values for new objects
@@ -75,7 +89,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1045
+#define _APS_NEXT_CONTROL_VALUE         1059
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -54,8 +54,8 @@ void CPresetInfoQueryDlg::ShowConnectionStatus(){
 void CPresetInfoQueryDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 
@@ -92,8 +92,8 @@ void CPresetInfoQueryDlg::InitListCtrl(){
 	dwStyle |= LVS_EX_GRIDLINES;//网格线（只适用与report风格的listctrl）
 	m_listCtrl.SetExtendedStyle(dwStyle); //设置扩展风格
 
-	m_listCtrl.InsertColumn( 0, L"序号", LVCFMT_LEFT, 40 );//插入列
-	m_listCtrl.InsertColumn( 1, L"信息", LVCFMT_LEFT, 180 );
+	m_listCtrl.InsertColumn( 0, L"序号", LVCFMT_LEFT, 80 );//插入列
+	m_listCtrl.InsertColumn( 1, L"信息", LVCFMT_CENTER, 375);
 
 	//for (int i = 0; i < 30; ++i)
 	//{
@@ -118,6 +118,29 @@ BOOL CPresetInfoQueryDlg::OnInitDialog()
 	theApp.m_Com.SetWnd(this->m_hWnd);
 	InitListCtrl();
 
+	CFont * f2 = new CFont; 
+	f2->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+
+	GetDlgItem(IDC_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f2);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f2);
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_QUERY_LIST)->SetFont(f2);
+	
 	DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_QUERY);
 
 	return TRUE;  // return TRUE unless you set the focus to a control

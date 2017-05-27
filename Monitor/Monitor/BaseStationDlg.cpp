@@ -69,8 +69,8 @@ void CBaseStationDlg::ShowConnectionStatus(){
 void CBaseStationDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 
@@ -95,6 +95,47 @@ void CBaseStationDlg::SetTipInfo(CString tip){
 }
 
 
+void CBaseStationDlg::Init(){
+	CFont * f2 = new CFont; 
+	f2->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+
+	GetDlgItem(IDC_QUERY_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_QUERY_BUTTON)->SetFont(f2);
+	GetDlgItem(IDC_QUERY_RESULT_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_RESULT_EDIT)->SetFont(f2);
+
+
+	GetDlgItem(IDC_SETTING_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_LABEL_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_NUMBER_EDIT)->SetFont(f2);
+	GetDlgItem(IDC_LABEL2_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_NUMBER_REPEAT_EDIT)->SetFont(f2);
+	
+	GetDlgItem(IDC_TIP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_SET_BUTTON)->SetFont(f2);
+	
+	GetDlgItem(IDCANCEL)->SetFont(f2);
+
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f2);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f2);
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f2);
+}
+
+
 BOOL CBaseStationDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -108,6 +149,8 @@ BOOL CBaseStationDlg::OnInitDialog()
 	SetTimer(TIMER_EVENT_POWER,TIME_INTERVAL_MINUTE, NULL);
 
 	theApp.m_Com.SetWnd(this->m_hWnd);
+
+	Init();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE

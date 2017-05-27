@@ -81,6 +81,42 @@ BOOL CPresetInfoMaintainDlg::OnInitDialog()
 
 	theApp.m_Com.SetWnd(this->m_hWnd);
 
+	CFont * f2 = new CFont; 
+	f2->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+
+	GetDlgItem(IDC_INPUT_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_NO_LABEL_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_INFOR_NO_EDIT_FOR_MODIFY)->SetFont(f2);
+	GetDlgItem(IDC_CONTENT_LABEL_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_INFO_CONTENT_EDIT_FOR_MODIFY)->SetFont(f2);
+
+
+	GetDlgItem(IDC_OPERATE_GROUP_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_ADD_BUTTON)->SetFont(f2);
+	GetDlgItem(IDC_MODIFY_BUTTON)->SetFont(f2);
+	GetDlgItem(IDC_DELETE_BUTTON)->SetFont(f2);
+	GetDlgItem(IDCANCEL)->SetFont(f2);
+
+
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f2);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f2);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f2);
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f2);
+	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
 }
@@ -101,8 +137,8 @@ void CPresetInfoMaintainDlg::ShowConnectionStatus(){
 void CPresetInfoMaintainDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 

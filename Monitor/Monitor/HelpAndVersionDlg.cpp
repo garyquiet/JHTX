@@ -38,26 +38,30 @@ END_MESSAGE_MAP()
 
 //初始化
 void CHelpAndVersionDlg::Init(){
-	//CFont * f; 
-	//f = new CFont; 
-	//f->CreateFont(19, // nHeight 
-	//	0, // nWidth 
-	//	0, // nEscapement 
-	//	0, // nOrientation 
-	//	FW_BOLD, // nWeight 
-	//	FALSE, // bItalic 
-	//	FALSE, // bUnderline 
-	//	0, // cStrikeOut 
-	//	ANSI_CHARSET, // nCharSet 
-	//	OUT_DEFAULT_PRECIS, // nOutPrecision 
-	//	CLIP_DEFAULT_PRECIS, // nClipPrecision 
-	//	DEFAULT_QUALITY, // nQuality 
-	//	DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
-	//	_T("宋体")); // lpszFac 
-	//GetDlgItem(IDC_HELP_STATIC)->SetFont(f);
-	//GetDlgItem(IDC_VERSION)->SetFont(f);
+	CFont * f; 
+	f = new CFont; 
+	f->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
 
-
+	GetDlgItem(IDC_HELP_STATIC)->SetFont(f);
+	GetDlgItem(IDC_VERSION)->SetFont(f);
+	GetDlgItem(IDCANCEL)->SetFont(f);
+	GetDlgItem(IDC_GROUP_STATIC)->SetFont(f);
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f);
 }
 
 //显示串口连接状态
@@ -75,8 +79,8 @@ void CHelpAndVersionDlg::ShowConnectionStatus(){
 void CHelpAndVersionDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 

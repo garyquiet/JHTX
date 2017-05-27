@@ -36,6 +36,9 @@ CMonitorApp theApp;
 BOOL CMonitorApp::SelfCheck(){
 	SYSTEM_POWER_STATUS_EX2 spsCurrent; 
 	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
+
+	//SYSTEM_POWER_STATUS_EX spsCurrent; 
+	//DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
 	
 	if( BATTERY_FLAG_LOW == spsCurrent.BatteryFlag){
 		AfxMessageBox(L"电池电量过低!");

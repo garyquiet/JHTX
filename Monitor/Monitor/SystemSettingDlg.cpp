@@ -58,8 +58,8 @@ void CSystemSettingDlg::ShowConnectionStatus(){
 void CSystemSettingDlg::ShowSystemTime(){
 	CTime tm; 
 	tm=CTime::GetCurrentTime();
-	//CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
-	CString str = tm.Format(L"%H:%M:%S");
+	CString str = tm.Format(L"%Y/%m/%d %H:%M:%S");
+	//CString str = tm.Format(L"%H:%M:%S");
 	((CStatic*)GetDlgItem(IDC_SYSTEM_TIME_STATIC))->SetWindowText(str);
 }
 
@@ -124,6 +124,37 @@ void CSystemSettingDlg::Init(){
 	{
 		m_comboSecond.SetCurSel(ret);
 	}
+
+
+	CFont * f; 
+	f = new CFont; 
+	f->CreateFont(15, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac 
+
+	GetDlgItem(IDC_COMPLETE_STUTAS_STATIC)->SetFont(f);
+	GetDlgItem(IDC_TIP_STATIC)->SetFont(f);
+
+	GetDlgItem(IDCANCEL)->SetFont(f);
+	GetDlgItem(IDC_GROUP_STATIC)->SetFont(f);
+	GetDlgItem(IDC_STATIC_COM_STATUS)->SetFont(f);
+	GetDlgItem(IDC_SYSTEM_TIME_STATIC)->SetFont(f);
+	GetDlgItem(IDC_STATIC_POWER)->SetFont(f);
+	GetDlgItem(IDC_TIMECONTROL_LABEL_STATIC)->SetFont(f);
+
+	GetDlgItem(IDC_SET_BUTTON)->SetFont(f);
+	GetDlgItem(IDC_VERSION_BUTTON)->SetFont(f);
 
 }
 
@@ -290,6 +321,14 @@ void CSystemSettingDlg::OnPaint()
 	CPaintDC dc(this); // device context for painting
 	// TODO: 在此处添加消息处理程序代码
 	// 不为绘图消息调用 CDialog::OnPaint()
+
+	/*CRect rc( 0, 0, 4, 8 );
+
+	MapDialogRect( &rc );
+	int baseUnitY = rc.bottom;
+	int baseUnitX = rc.right;
+	TRACE(L"baseUnitX = %d\n", baseUnitX);
+	TRACE(L"baseUnitY = %d\n", baseUnitY);*/
 
 	CRect rect; 
 	GetClientRect(rect); 

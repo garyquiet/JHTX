@@ -44,6 +44,9 @@ private:
 
 	//设置操作结果提示信息
 	void SetTipInfo(CString tip);
+
+	//初始化
+	void Init();
 public:
 	afx_msg void OnEnSetfocusNumberEdit();
 	afx_msg void OnEnKillfocusNumberEdit();
