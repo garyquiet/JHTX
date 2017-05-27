@@ -23,6 +23,9 @@
 #define IDB_DISCONNECT_BITMAP           135
 #define IDB_BITMAP2                     141
 #define IDB_SPLASH_BITMAP               141
+#define IDD_MESSAGE_DIALOG              142
+#define IDB_BITMAP1                     146
+#define IDB_WARNING_BITMAP              146
 #define IDC_PRESET_INFO_BUTTON          1001
 #define IDC_SYSTEM_TIME_STATIC          1009
 #define IDC_SPECIAL_CODE_BUTTON         1010
@@ -81,15 +84,17 @@
 #define IDC_CONTENT_LABEL_STATIC        1056
 #define IDC_NO_LABEL_STATIC             1057
 #define IDC_OPERATE_GROUP_STATIC        1058
+#define IDC_PIC_STATIC                  1059
+#define IDC_INFO_STATIC                 1060
 #define IDC_RESULT_STUTAS_STATIC        65535
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        142
+#define _APS_NEXT_RESOURCE_VALUE        147
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1059
+#define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

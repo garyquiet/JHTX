@@ -5,6 +5,7 @@
 #include "Monitor.h"
 #include "SaveSettingDlg.h"
 #include "ProtocolPkg.h"
+#include "MessageDlg.h"
 
 // CSaveSettingDlg 对话框
 
@@ -191,7 +192,10 @@ void CSaveSettingDlg::OnBnClickedSetButton()
 			break;
 		default:
 			{
-				MessageBox(L"参数错误!");
+				//MessageBox(L"参数错误!");
+				CMessageDlg dlg;
+				dlg.m_info = L"参数错误!";
+				dlg.DoModal();
 			}
 			break;
 		}
@@ -206,7 +210,10 @@ void CSaveSettingDlg::OnBnClickedSetButton()
 		}
 	}
 	else{
-		MessageBox(L"请选择一个保存方式!");
+		//MessageBox(L"请选择一个保存方式!");
+		CMessageDlg dlg;
+		dlg.m_info = L"请选择一个保存方式!";
+		dlg.DoModal();
 
 	}
 	

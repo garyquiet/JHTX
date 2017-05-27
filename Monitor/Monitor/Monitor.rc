@@ -122,7 +122,7 @@ BEGIN
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,84,7,105,8
     LTEXT           "电量:--%",IDC_STATIC_POWER,222,7,50,8
     GROUPBOX        "输入区",IDC_INPUT_GROUP_STATIC,5,28,265,107
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,440,265,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,318,265,8
     GROUPBOX        "操作区",IDC_OPERATE_GROUP_STATIC,5,141,265,126
 END
 
@@ -156,7 +156,7 @@ BEGIN
     PUSHBUTTON      "设置指挥基站中心号码",IDC_SET_BUTTON,18,240,237,19
     PUSHBUTTON      "返回主界面",IDCANCEL,19,313,237,19
     GROUPBOX        "查询",IDC_QUERY_GROUP_STATIC,4,28,266,96
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,437,265,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,343,265,8
     GROUPBOX        "设置",IDC_SETTING_GROUP_STATIC,4,134,266,163
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,88,7,97,8
     LTEXT           "电量:--%",IDC_STATIC_POWER,220,7,52,8
@@ -178,7 +178,7 @@ BEGIN
     PUSHBUTTON      "设置当前特殊编号号码",IDC_SET_BUTTON,18,260,238,19
     CTEXT           "特殊编号设置完成后进行查询确认",IDC_TIP_STATIC,35,296,204,11
     PUSHBUTTON      "返回主界面",IDCANCEL,18,329,238,19
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,437,265,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,358,265,8
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,68,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,82,7,110,8
     LTEXT           "电量:--%",IDC_STATIC_POWER,228,7,44,8
@@ -204,7 +204,7 @@ BEGIN
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,69,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,83,7,107,8
     LTEXT           "电量:--%",IDC_STATIC_POWER,227,7,45,8
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,18,434,239,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,18,344,239,8
 END
 
 IDD_L1_BCSZ_DIALOG DIALOG  0, 0, 275, 459
@@ -216,7 +216,7 @@ BEGIN
     PUSHBUTTON      "确认选择",IDC_SET_BUTTON,23,99,229,28
     CTEXT           "报知设备状态设置完成后进行查询确认",IDC_TIP_STATIC,34,153,205,36
     PUSHBUTTON      "返回主界面",IDCANCEL,23,226,229,28
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,26,432,221,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,26,268,221,8
     LTEXT           "选择要保存的方式",IDC_SELECT_METHOD_STATIC,22,43,116,8
     GROUPBOX        "保存设置",IDC_GROUP_STATIC,7,24,264,175
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,84,7,106,8
@@ -240,7 +240,7 @@ BEGIN
     CTEXT           "由于维护设备无其他授时、校时手段，操作时请注意所设时间的有效性。",IDC_TIP_STATIC,43,220,188,24
     PUSHBUTTON      "帮助及软件版本信息",IDC_VERSION_BUTTON,31,282,212,28
     PUSHBUTTON      "返回主界面",IDCANCEL,31,337,212,28
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,16,435,244,8
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,16,379,244,8
     GROUPBOX        "系统设置",IDC_GROUP_STATIC,7,34,265,226
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,8,8,67,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,85,8,116,8
@@ -259,6 +259,16 @@ BEGIN
     GROUPBOX        "帮助信息",IDC_GROUP_STATIC,5,25,264,238
     CTEXT           "软件版本： 1.0    Copyright (C) 2017",IDC_VERSION,26,426,221,14
     PUSHBUTTON      "返回上一级",IDCANCEL,22,274,230,27
+END
+
+IDD_MESSAGE_DIALOG DIALOG  0, 0, 218, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "消息框"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,143,65,68,14
+    LTEXT           "静态",IDC_INFO_STATIC,83,23,103,23
+    CONTROL         146,IDC_PIC_STATIC,"Static",SS_BITMAP,19,18,32,30
 END
 
 
@@ -387,6 +397,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 454
     END
+
+    IDD_MESSAGE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -404,6 +422,7 @@ IDB_MORE_BITMAP         BITMAP                  "img\\more.bmp"
 IDB_CONNECT_BITMAP      BITMAP                  "img\\connect.bmp"
 IDB_DISCONNECT_BITMAP   BITMAP                  "img\\disconnect.bmp"
 IDB_SPLASH_BITMAP       BITMAP                  "img\\splash.bmp"
+IDB_WARNING_BITMAP      BITMAP                  "img\\warning2.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Monitor.h"
 #include "BaseStationDlg.h"
-
+#include "MessageDlg.h"
 #include "ProtocolPkg.h"
 
 // CBaseStationDlg 对话框
@@ -212,13 +212,19 @@ void CBaseStationDlg::OnBnClickedSetButton()
 			}
 		}
 		else{
-			MessageBox(L"两次输入的指挥基站中心号码不一致,请检查!");
+			//MessageBox(L"两次输入的指挥基站中心号码不一致,请检查!");
+			CMessageDlg dlg;
+			dlg.m_info = L"两次输入的指挥基站中心号码不一致,请检查!";
+			dlg.DoModal();
 			return;
 		}
 		
 	}
 	else{
-		MessageBox(L"指挥基站中心号码不能为空!");
+		//MessageBox(L"指挥基站中心号码不能为空!");
+		CMessageDlg dlg;
+		dlg.m_info = L"指挥基站中心号码不能为空!";
+		dlg.DoModal();
 	}
 
 }
@@ -273,9 +279,21 @@ LRESULT CBaseStationDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 			UpdateData(FALSE);
 		}
 		else{
-			SetTipInfo(tip);
+
+			vector<CString> v2 = CProtocolPkg::SplitString(tip, L"：");
+			if(v2.size() > 0){
+				if(v2[0] == L"上报基站") //上报基站
+				{
+					m_strQueryResult = tip;
+					UpdateData(FALSE);
+				}
+				else{
+					SetTipInfo(tip);
+				}
+			}
 		}
 	}
+	
 
 	return 1;
 }

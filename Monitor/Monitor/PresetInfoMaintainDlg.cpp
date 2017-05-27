@@ -7,6 +7,7 @@
 #include "PresetInfoMaintainDlg.h"
 #include "ProtocolPkg.h"
 
+#include "MessageDlg.h"
 
 // CPresetInfoMaintainDlg 对话框
 
@@ -36,7 +37,7 @@ void CPresetInfoMaintainDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_INFO_CONTENT_EDIT_FOR_MODIFY, m_strPresetInfoForModify);
 	DDV_MaxChars(pDX, m_strPresetInfoForModify, 8);
 	DDX_Text(pDX, IDC_INFOR_NO_EDIT_FOR_MODIFY, m_iPresetInfoNoForModify);
-	DDV_MinMaxUInt(pDX, m_iPresetInfoNoForModify, 1, 30);
+
 	//DDX_Text(pDX, IDC_INFO_NO_EDIT_FOR_DELETE, m_iPresetInfoNoForDelete);
 	//DDV_MinMaxUInt(pDX, m_iPresetInfoNoForDelete, 1, 30);
 }
@@ -183,6 +184,13 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 	// TODO: 在此添加控件通知处理程序代码
 	if(TRUE == UpdateData(TRUE))
 	{
+		if (m_iPresetInfoNoForModify < 1 || m_iPresetInfoNoForModify > 30)
+		{
+			CMessageDlg dlg;
+			dlg.m_info = L"信息序号必须在1到30之间!";
+			dlg.DoModal();
+			return;
+		}
 		if (m_strPresetInfoForModify.Trim().GetLength() > 0)
 		{
 
@@ -199,7 +207,10 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 			}
 		}
 		else{
-			MessageBox(L"预置信息不能为空!");
+			//MessageBox(L"预置信息不能为空!");
+			CMessageDlg dlg;
+			dlg.m_info = L"预置信息不能为空!";
+			dlg.DoModal();
 		}
 	}
 }
@@ -303,7 +314,10 @@ void CPresetInfoMaintainDlg::OnBnClickedModifyButton()
 			}
 		}
 		else{
-			MessageBox(L"预置信息不能为空!");
+			//MessageBox(L"预置信息不能为空!");
+			CMessageDlg dlg;
+			dlg.m_info = L"预置信息不能为空!";
+			dlg.DoModal();
 		}
 		
 	}

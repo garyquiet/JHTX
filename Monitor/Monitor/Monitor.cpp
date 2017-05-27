@@ -5,6 +5,7 @@
 #include "Monitor.h"
 #include "MonitorDlg.h"
 #include "SplashWnd.h"
+#include "MessageDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,7 +42,10 @@ BOOL CMonitorApp::SelfCheck(){
 	//DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
 	
 	if( BATTERY_FLAG_LOW == spsCurrent.BatteryFlag){
-		AfxMessageBox(L"电池电量过低!");
+		//AfxMessageBox(L"电池电量过低!");
+		CMessageDlg dlg;
+		dlg.m_info = L"电池电量过低!";
+		dlg.DoModal();
 	}
 
 	if (!m_Com.IsOpen())
@@ -50,7 +54,10 @@ BOOL CMonitorApp::SelfCheck(){
 		{
 			TCHAR szBuf[1024];
 			wsprintf(szBuf, _T("打开 COM%d 失败, 错误代码:%d"), COM_PORT, GetLastError());
-			AfxMessageBox(szBuf);
+			//AfxMessageBox(szBuf);
+			CMessageDlg dlg;
+			dlg.m_info = szBuf;
+			dlg.DoModal();
 			return FALSE;
 		}
 		else

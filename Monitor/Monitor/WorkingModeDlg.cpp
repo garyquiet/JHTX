@@ -5,7 +5,7 @@
 #include "Monitor.h"
 #include "WorkingModeDlg.h"
 #include "ProtocolPkg.h"
-
+#include "MessageDlg.h"
 
 // CWorkingModeDlg 对话框
 
@@ -222,7 +222,10 @@ void CWorkingModeDlg::OnBnClickedSetButton()
 			break;
 		default:
 			{
-				MessageBox(L"参数错误!");
+				//MessageBox(L"参数错误!");
+				CMessageDlg dlg;
+				dlg.m_info = L"参数错误!";
+				dlg.DoModal();
 			}
 			break;
 		}
@@ -237,7 +240,10 @@ void CWorkingModeDlg::OnBnClickedSetButton()
 		}
 	}
 	else{
-		MessageBox(L"请选择一个工作模式!");
+		//MessageBox(L"请选择一个工作模式!");
+		CMessageDlg dlg;
+		dlg.m_info = L"请选择一个工作模式!";
+		dlg.DoModal();
 
 	}
 

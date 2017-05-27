@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Monitor.h"
 #include "SystemSettingDlg.h"
-
+#include "MessageDlg.h"
 #include "HelpAndVersionDlg.h"
 
 // CSystemSettingDlg 对话框
@@ -225,10 +225,16 @@ void CSystemSettingDlg::OnBnClickedSetButton()
 	st.wSecond = _ttoi(strSecond);
 
 	if(FALSE == SetLocalTime(&st)){
-		MessageBox(L"设置失败!");
+		//MessageBox(L"设置失败!");
+		CMessageDlg dlg;
+		dlg.m_info = L"设置失败!";
+		dlg.DoModal();
 	}
 	else{
-		MessageBox(L"设置成功!");
+		//MessageBox(L"设置成功!");
+		CMessageDlg dlg;
+		dlg.m_info = L"设置成功!";
+		dlg.DoModal();
 	}
 }
 
