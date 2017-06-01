@@ -4,6 +4,8 @@
 #pragma once
 
 #include "CnComm.h"
+#include "oled/P36GPIO.h"
+
 
 #ifndef __AFXWIN_H__
 	#error "在包含此文件之前包含“stdafx.h”以生成 PCH 文件"
@@ -31,11 +33,15 @@ public:
 public:
 	CnComm m_Com;	//串口
 
+	CP36GPIO		m_GPIO;	//显示屏
+
 	DECLARE_MESSAGE_MAP()
 
 private:
 	//系统自检测
 	BOOL SelfCheck();
+public:
+	virtual int ExitInstance();
 };
 
 extern CMonitorApp theApp;

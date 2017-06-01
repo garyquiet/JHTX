@@ -80,6 +80,9 @@ BOOL CMonitorApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
+	//显示屏打开
+	m_GPIO.OLED_On();
+
 	if(TRUE == SelfCheck()) //系统自检成功
 	{
 		CMonitorDlg dlg;
@@ -96,4 +99,12 @@ BOOL CMonitorApp::InitInstance()
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	//  而不是启动应用程序的消息泵。
 	return FALSE;
+}
+
+int CMonitorApp::ExitInstance()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	m_GPIO.OLED_Off();
+	return CWinApp::ExitInstance();
 }

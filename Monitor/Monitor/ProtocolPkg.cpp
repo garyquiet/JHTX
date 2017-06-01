@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "ProtocolPkg.h"
 #include "Monitor.h"
+#include <tlhelp32.h>
+#include <winsock.h>
 
 CProtocolPkg::CProtocolPkg(void)
 {
@@ -323,4 +325,94 @@ CString CProtocolPkg::eliminateNonHanZi(CString input){
 		}
 	}
 	return str;
+}
+
+
+
+//启动输入
+BOOL CProtocolPkg::BootInputMethod(){
+	char cmd[128];
+	strcpy(cmd,"t9vs2008.exe");
+
+	STARTUPINFO info;
+	memset(&info,0,sizeof(info));
+	info.cb=sizeof(info);
+	PROCESS_INFORMATION pinfo;
+	BOOL ret = CreateProcess((LPCWSTR) cmd, NULL, NULL,NULL,NULL,0,NULL,NULL,NULL,&pinfo);
+	//BOOL ret = CreateProcess((LPCWSTR) cmd, L"t9vs2008.exe", NULL,NULL,NULL,0,NULL,NULL,NULL,&pinfo);
+	//BOOL ret = CreateProcess(NULL,L"notepad.exe",NULL,NULL,FALSE,0,NULL,NULL,&info,&pinfo);
+	return ret;
+}
+
+//切换输入法
+void CProtocolPkg::SwitchInputMethod(int type){
+	int sockfd, port = 2014;
+	struct sockaddr_in sin;
+	int recv_size;
+	char buf[16];
+
+	memset(&sin,0 , sizeof(sin));
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = inet_addr("127.0.0.1");
+	sin.sin_port = htons(port);
+
+
+	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	{
+		return ;
+	}
+
+	if(connect(sockfd, (struct sockaddr *)&sin, sizeof(sin)) < 0)
+	{
+		printf("continue, connect to %s:%d\n",inet_ntoa(sin.sin_addr), ntohs(sin.sin_port));
+		closesocket(sockfd);
+		//Sleep(100);
+		//continue;
+	}
+	printf("success, connect to %s:%d\n",inet_ntoa(sin.sin_addr), ntohs(sin.sin_port));
+
+	struct timeval timeout={3,0};
+
+	//if(setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, ( char * )&timeout, sizeof( timeout ) ) == -1)
+	//{	
+	//	printf("set socket option error ");
+	//	net_close(sockfd);
+	//}
+
+	send(sockfd,(char*) &type, sizeof(type),0);
+	closesocket(sockfd);
+}
+
+//隐藏输入法
+void CProtocolPkg::HideInputMethd(){}
+
+//停止输入法
+BOOL CProtocolPkg::KillInputMethod(){
+
+	CString lpProcessName = _T("t9vs2008.exe");
+	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	PROCESSENTRY32 pe;
+	pe.dwSize = sizeof(PROCESSENTRY32);
+	if(!Process32First(hSnapShot,&pe))
+	{
+		return FALSE;
+	}
+	CString strProcessName = lpProcessName;
+	// strProcessName.MakeLower();
+	while (Process32Next(hSnapShot,&pe))
+	{
+		CString scTmp = pe.szExeFile; 
+		//  scTmp.MakeLower();
+		if(scTmp==strProcessName)
+		{
+			DWORD dwProcessID = pe.th32ProcessID;
+			HANDLE hProcess = ::OpenProcess(PROCESS_TERMINATE,FALSE,dwProcessID);
+			::TerminateProcess(hProcess,0);
+			CloseHandle(hProcess);
+			return TRUE;
+		}
+		// scTmp.ReleaseBuffer();
+	}
+	//strProcessName.ReleaseBuffer();
+	return FALSE;
 }

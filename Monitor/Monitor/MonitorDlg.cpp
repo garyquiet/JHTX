@@ -1,10 +1,12 @@
 // MonitorDlg.cpp : 实现文件
 //
 
+
 #include "stdafx.h"
 #include "Monitor.h"
 #include "MonitorDlg.h"
 #include "SplashWnd.h"
+#include <winsock.h>
 
 #include "ProtocolPkg.h"
 #include "PresetInfoDlg.h"
@@ -13,6 +15,7 @@
 #include "WorkingModeDlg.h"
 #include "BaseStationDlg.h"
 #include "SpecialCodeDlg.h"
+#include "MessageDlg.h"
 
 
 #ifdef _DEBUG
@@ -62,10 +65,24 @@ BOOL CMonitorDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+	WSADATA wsaData;											//指向WinSocket信息结构的指针
+	if(WSAStartup(MAKEWORD(1,1),&wsaData)!=0)					//进行WinSocket的初始化
+	{
+		//AfxMessageBox(_T("Can'tinitiatesWindowssocket!Programstop.\n"));	//初始化失败返回-1
+		CMessageDlg dlg;
+		dlg.m_info = L"无法初始化Windows Scoket，输入法将无法使用!";
+		dlg.DoModal();
+	}
+
 	// TODO: 在此添加额外的初始化代码
+
+	SetWindowPos(&wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+
 	if(FALSE == Init())
 		return FALSE;
 
+	//CProtocolPkg::BootInputMethod();
+	
 	//ShowSplashWindow();
 
 

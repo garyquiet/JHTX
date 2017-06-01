@@ -151,6 +151,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
+				AdditionalDependencies="Toolhelp.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				StackReserveSize="65536"
@@ -317,6 +318,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
+				AdditionalDependencies="Toolhelp.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				StackReserveSize="65536"
@@ -364,6 +366,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\oled\GPIO.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\HelpAndVersionDlg.cpp"
 				>
 			</File>
@@ -377,6 +383,14 @@
 			</File>
 			<File
 				RelativePath=".\MonitorDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36GPIO.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36MMTimer.cpp"
 				>
 			</File>
 			<File
@@ -470,6 +484,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\oled\GPIO.h"
+				>
+			</File>
+			<File
 				RelativePath=".\HelpAndVersionDlg.h"
 				>
 			</File>
@@ -483,6 +501,26 @@
 			</File>
 			<File
 				RelativePath=".\MonitorDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36CmdMisc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36GPIO.h"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36Misc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36MMTimer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\oled\P36MsgMisc.h"
 				>
 			</File>
 			<File

@@ -65,8 +65,8 @@ void CSystemSettingDlg::ShowSystemTime(){
 
 //显示电量
 void CSystemSettingDlg::ShowBatteryPower(){
-	SYSTEM_POWER_STATUS_EX spsCurrent; 
-	DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
+	SYSTEM_POWER_STATUS_EX2 spsCurrent; 
+	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
 
 	CString str = L"";
 	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);

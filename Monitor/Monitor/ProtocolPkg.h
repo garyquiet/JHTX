@@ -86,4 +86,19 @@ public:
 	//解析查询返回的预置信息
 	static map<CString,CString> ParsePresetInfo(CString content);
 
+
+	//输入法
+public:
+
+	//启动输入
+	static BOOL BootInputMethod();
+
+	//切换输入法
+	static void SwitchInputMethod(int type);
+
+	//隐藏输入法
+	static void HideInputMethd();
+
+	//停止输入法
+	static BOOL KillInputMethod();
 };
