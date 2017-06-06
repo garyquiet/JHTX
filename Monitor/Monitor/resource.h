@@ -22,10 +22,11 @@
 #define IDB_CONNECT_BITMAP              134
 #define IDB_DISCONNECT_BITMAP           135
 #define IDB_BITMAP2                     141
-#define IDB_SPLASH_BITMAP               141
 #define IDD_MESSAGE_DIALOG              142
 #define IDB_BITMAP1                     146
 #define IDB_WARNING_BITMAP              146
+#define IDB_BITMAP3                     147
+#define IDB_SPLASH_BITMAP               147
 #define IDC_PRESET_INFO_BUTTON          1001
 #define IDC_SYSTEM_TIME_STATIC          1009
 #define IDC_SPECIAL_CODE_BUTTON         1010
@@ -92,7 +93,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        147
+#define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           101

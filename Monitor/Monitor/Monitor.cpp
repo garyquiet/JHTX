@@ -38,6 +38,9 @@ BOOL CMonitorApp::SelfCheck(){
 	SYSTEM_POWER_STATUS_EX2 spsCurrent; 
 	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
 
+	//CString tmp = L"";
+	//tmp.Format(L"%d-%d-%d-%d-%d-%d", spsCurrent.ACLineStatus,spsCurrent.BatteryLifePercent, spsCurrent.BatteryFlag, spsCurrent.BackupBatteryFlag, spsCurrent.BackupBatteryLifePercent, spsCurrent.BatteryChemistry);
+	//AfxMessageBox(tmp);
 	//SYSTEM_POWER_STATUS_EX spsCurrent; 
 	//DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
 	

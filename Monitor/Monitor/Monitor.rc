@@ -195,9 +195,9 @@ BEGIN
     COMBOBOX        IDC_MODE_COMBO,17,172,240,136,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "切换当前工作模式",IDC_SET_BUTTON,17,230,240,23
     PUSHBUTTON      "返回主界面",IDCANCEL,17,311,240,23
+    CTEXT           "切换成功后，建议用""查询当前设备工作模式""功能进行查询操作，以确保当前工作模式切换成功",IDC_TIP_STATIC,27,263,219,21
     LTEXT           "查询结果",IDC_QUERY_RESULT_STATIC,17,79,85,8
     LTEXT           "选择要切换的模式",IDC_SWITCH_MODE_STATIC,15,153,116,8
-    CTEXT           "切换成功后，建议用""查询当前设备工作模式""功能进行查询操作，以确保当前工作模式切换成功",IDC_TIP_STATIC,27,263,219,32
     GROUPBOX        "查询",IDC_QUERY_GROUP_STATIC,4,25,267,96
     GROUPBOX        "设置",IDC_SETTING_GROUP_STATIC,4,135,267,156
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,69,8
@@ -420,8 +420,8 @@ IDB_MEDIA_BITMAP        BITMAP                  "img\\media.bmp"
 IDB_MORE_BITMAP         BITMAP                  "img\\more.bmp"
 IDB_CONNECT_BITMAP      BITMAP                  "img\\connect.bmp"
 IDB_DISCONNECT_BITMAP   BITMAP                  "img\\disconnect.bmp"
-IDB_SPLASH_BITMAP       BITMAP                  "img\\splash.bmp"
 IDB_WARNING_BITMAP      BITMAP                  "img\\warning2.bmp"
+IDB_SPLASH_BITMAP       BITMAP                  "img\\splash.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -83,6 +83,7 @@ BOOL CMonitorDlg::OnInitDialog()
 
 	//CProtocolPkg::BootInputMethod();
 	
+	//启动软件开启画面
 	//ShowSplashWindow();
 
 
@@ -221,6 +222,7 @@ void CMonitorDlg::ShowSplashWindow(){
 	CSplashWnd *pSplashWindow = new CSplashWnd;//创建对象
 	pSplashWindow->CreateSplashWnd();
 	pSplashWindow->CenterWindow();
+	pSplashWindow->SetWindowPos(&wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 	pSplashWindow->ShowWindow(SW_SHOW);  //显示窗口
 	pSplashWindow->UpdateWindow();
 	Sleep(2000);  //表示启动画面持续时间
@@ -300,7 +302,7 @@ void CMonitorDlg::ShowBatteryPower(){
 	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
 
 	CString str = L"";
-	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
+	str.Format(L"电量:%d%%",spsCurrent.BatteryLifePercent);
 	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 }
 

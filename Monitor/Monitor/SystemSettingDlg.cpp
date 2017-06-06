@@ -69,7 +69,7 @@ void CSystemSettingDlg::ShowBatteryPower(){
 	DWORD dwLen = GetSystemPowerStatusEx2(&spsCurrent, sizeof(spsCurrent), TRUE);
 
 	CString str = L"";
-	str.Format(L"电量:%d%%",spsCurrent.BackupBatteryLifePercent);
+	str.Format(L"电量:%d%%",spsCurrent.BatteryLifePercent);
 	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 }
 
