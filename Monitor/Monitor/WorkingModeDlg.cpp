@@ -68,8 +68,38 @@ void CWorkingModeDlg::ShowBatteryPower(){
 	DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
 
 	CString str = L"";
-	str.Format(L"电量:%d%%",spsCurrent.BatteryLifePercent);
-	((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+	
+	
+	if(dwLen != 0){
+		if(spsCurrent.ACLineStatus == AC_LINE_ONLINE)
+		{
+			if(spsCurrent.BatteryLifePercent != 100)
+			{
+
+				// 正在充电
+				//SetPowerStepBmp(200);
+				//MessageBox(_T("充电..."));
+				str.Format(L"充电:%d%%", spsCurrent.BatteryLifePercent);
+				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+			}
+			else
+			{
+				// 充电结束
+				//SetPowerStepBmp(300);
+				str.Format(L"电源:%d%%", spsCurrent.BatteryLifePercent);
+				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+
+			}
+		}
+		else
+		{
+			//MessageBox(_T("直流电"));
+			str.Format(L"电池:%d%%",spsCurrent.BatteryLifePercent);
+			((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+		}
+	}
+	//str.Format(L"电量:%d%%",spsCurrent.BatteryLifePercent);
+	//((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 }
 
 //设置提示信息
@@ -269,14 +299,27 @@ LRESULT CWorkingModeDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	
 
 	vector<CString> v = CProtocolPkg::SplitString(tip, L":");
-	if(v.size() > 0){
+	if(v.size() > 0)
+	{
 		if(v[0] == L"当前模式") //当前模式
 		{
 			m_strQueryResult = tip;
 			UpdateData(FALSE);
 		}
 		else{
-			SetTipInfo(tip);
+
+			vector<CString> v2 = CProtocolPkg::SplitString(tip, L"：");
+			if(v2.size() > 0){
+				if(v2[0] == L"当前模式") //当前模式
+				{
+					m_strQueryResult = tip;
+					UpdateData(FALSE);
+				}
+				else{
+					SetTipInfo(tip);
+				}
+			}
+
 		}
 	}
 
