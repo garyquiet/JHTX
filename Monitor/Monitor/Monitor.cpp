@@ -44,10 +44,14 @@ BOOL CMonitorApp::SelfCheck(){
 	//SYSTEM_POWER_STATUS_EX spsCurrent; 
 	//DWORD dwLen = GetSystemPowerStatusEx(&spsCurrent, TRUE);
 	
-	if( BATTERY_FLAG_LOW == spsCurrent.BatteryFlag){
+	/*CString tmp = L"";
+	tmp.Format(L"flag: %d",spsCurrent.BatteryFlag);
+	AfxMessageBox(tmp);*/
+
+	if( BATTERY_FLAG_CRITICAL == spsCurrent.BatteryFlag){
 		//AfxMessageBox(L"电池电量过低!");
 		CMessageDlg dlg;
-		dlg.m_info = L"电池电量过低!";
+		dlg.m_info = L"电池电量过低,请及时充电!";
 		dlg.DoModal();
 	}
 
