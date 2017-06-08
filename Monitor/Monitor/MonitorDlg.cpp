@@ -76,10 +76,11 @@ BOOL CMonitorDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
-	SetWindowPos(&wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
 	if(FALSE == Init())
 		return FALSE;
+
+	SetWindowPos(&wndTopMost,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
 	//CProtocolPkg::BootInputMethod();
 	
@@ -314,6 +315,21 @@ void CMonitorDlg::ShowBatteryPower(){
 				//MessageBox(_T("充电..."));
 				str.Format(L"充电:%d%%", spsCurrent.BatteryLifePercent);
 				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_CHARING_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
 			}
 			else
 			{
@@ -322,6 +338,21 @@ void CMonitorDlg::ShowBatteryPower(){
 				str.Format(L"电源:%d%%", spsCurrent.BatteryLifePercent);
 				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_POWER_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+
 			}
 		}
 		else
@@ -329,6 +360,94 @@ void CMonitorDlg::ShowBatteryPower(){
 			//MessageBox(_T("直流电"));
 			str.Format(L"电池:%d%%",spsCurrent.BatteryLifePercent);
 			((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
+
+			if (spsCurrent.BatteryLifePercent >= 100)
+			{
+				//Full
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_FULL_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+			}
+			else if(spsCurrent.BatteryLifePercent < 100 && spsCurrent.BatteryLifePercent >= 70){
+				//More
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_MORE_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+			}
+
+			else if(spsCurrent.BatteryLifePercent < 70 && spsCurrent.BatteryLifePercent >= 40){
+				//Media
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_MEDIA_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+			}
+			else if(spsCurrent.BatteryLifePercent < 40 && spsCurrent.BatteryLifePercent >= 10){
+				//Less
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_LESS_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+			}
+			else{
+				//Empty
+				//从资源中加载图片
+				CBitmap bitmap;
+				// 保存CBitmap加载的位图的句柄
+				HBITMAP hBmp;   
+				//加载指定位图资源 Bmp图片ID
+				bitmap.LoadBitmap(IDB_EMPTY_BITMAP);
+				// 获取bitmap加载位图的句柄
+				hBmp = (HBITMAP)bitmap.GetSafeHandle(); 
+				//获取对话框上的句柄 图片控件ID
+				CStatic *p=(CStatic *)GetDlgItem(IDC_POWER_PIC_STATIC);  
+				//设置静态控件窗口风格为位图居中显示
+				//p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
+				//将图片设置到Picture控件上
+				p->SetBitmap(hBmp); 
+			}
 		}
 	}
 

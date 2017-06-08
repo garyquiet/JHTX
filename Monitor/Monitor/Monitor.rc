@@ -76,16 +76,17 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_SYSM
 EXSTYLE WS_EX_APPWINDOW | 0x80000000L
 FONT 9, "MS Shell Dlg"
 BEGIN
-    PUSHBUTTON      "预置信息",IDC_PRESET_INFO_BUTTON,11,37,124,124,WS_DISABLED
-    PUSHBUTTON      "工作模式",IDC_WORKING_MODE_BUTTON,138,37,124,124,WS_DISABLED
-    PUSHBUTTON      "指挥基站",IDC_BASE_STATION_BUTTON,11,167,124,124,WS_DISABLED
-    PUSHBUTTON      "特殊编号",IDC_SPECIAL_CODE_BUTTON,138,167,124,124,WS_DISABLED
-    PUSHBUTTON      "保存设置",IDC_SAVE_SETTING_BUTTON,11,297,124,124,WS_DISABLED
-    PUSHBUTTON      "系统设置",IDC_SYSTEM_SETTING_BUTTON,138,297,124,124
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,67,8
+    CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,76,7,121,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
     LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,47,8
-    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,20,429,234,8
-    CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,73,7,128,8
+    PUSHBUTTON      "预置信息",IDC_PRESET_INFO_BUTTON,23,44,111,104,WS_DISABLED
+    PUSHBUTTON      "工作模式",IDC_WORKING_MODE_BUTTON,141,44,111,104,WS_DISABLED
+    PUSHBUTTON      "指挥基站",IDC_BASE_STATION_BUTTON,23,161,111,104,WS_DISABLED
+    PUSHBUTTON      "特殊编号",IDC_SPECIAL_CODE_BUTTON,141,161,111,104,WS_DISABLED
+    PUSHBUTTON      "保存设置",IDC_SAVE_SETTING_BUTTON,23,278,111,104,WS_DISABLED
+    PUSHBUTTON      "系统设置",IDC_SYSTEM_SETTING_BUTTON,141,278,111,104
+    CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,20,412,234,14
     GROUPBOX        "操作区",IDC_GROUP_STATIC,8,23,258,425
 END
 
@@ -100,8 +101,9 @@ BEGIN
     GROUPBOX        "操作区",IDC_GROUP_STATIC,4,27,267,235
     CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,14,281,246,16
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,76,7,121,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,225,7,48,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,48,8
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,9,7,66,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L2_YZXX_WH_DIALOG DIALOG  0, 0, 275, 459
@@ -119,10 +121,11 @@ BEGIN
     PUSHBUTTON      "返回上一级",IDCANCEL,25,285,224,22
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,9,7,65,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,84,7,105,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,222,7,50,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,50,8
     GROUPBOX        "输入区",IDC_INPUT_GROUP_STATIC,5,28,265,107
     CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,318,265,18
     GROUPBOX        "操作区",IDC_OPERATE_GROUP_STATIC,5,141,265,126
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L2_YZXX_CX_DIALOG DIALOG  0, 0, 275, 459
@@ -137,6 +140,7 @@ BEGIN
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,77,7,120,8
     LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,50,8
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,9,7,67,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L1_ZHJZ_DIALOG DIALOG  0, 0, 275, 459
@@ -158,8 +162,9 @@ BEGIN
     CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,343,265,17
     GROUPBOX        "设置",IDC_SETTING_GROUP_STATIC,4,134,266,163
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,88,7,97,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,220,7,52,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,49,8
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,68,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L1_TSBH_DIALOG DIALOG  0, 0, 275, 459
@@ -180,9 +185,10 @@ BEGIN
     CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,5,358,265,20
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,68,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,82,7,110,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,228,7,44,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,44,8
     GROUPBOX        "查询",IDC_QUERY_GROUP_STATIC,4,29,267,100
     GROUPBOX        "设置",IDC_SETTING_GROUP_STATIC,4,147,267,169
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L1_GZMS_DIALOG DIALOG  0, 0, 275, 459
@@ -202,8 +208,9 @@ BEGIN
     GROUPBOX        "设置",IDC_SETTING_GROUP_STATIC,4,135,267,156
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,69,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,83,7,107,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,227,7,45,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,45,8
     CTEXT           "Copyright (C) 2017",IDC_COMPLETE_STUTAS_STATIC,18,344,239,20
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L1_BCSZ_DIALOG DIALOG  0, 0, 275, 459
@@ -219,8 +226,9 @@ BEGIN
     LTEXT           "选择要保存的方式",IDC_SELECT_METHOD_STATIC,22,43,116,8
     GROUPBOX        "保存设置",IDC_GROUP_STATIC,7,24,264,175
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,84,7,106,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,226,7,45,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,45,8
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,9,7,68,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L1_XTSZ_DIALOG DIALOG  0, 0, 275, 459
@@ -243,7 +251,8 @@ BEGIN
     GROUPBOX        "系统设置",IDC_GROUP_STATIC,7,34,265,226
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,8,8,67,8
     CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,85,8,116,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,224,7,48,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,48,8
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_L2_XTSZ_HELP_VERSION_DIALOG DIALOG  0, 0, 275, 459
@@ -253,11 +262,12 @@ FONT 9, "MS Shell Dlg"
 BEGIN
     LTEXT           "串口连接:未连接",IDC_STATIC_COM_STATUS,7,7,67,8
     LTEXT           "\r\n1. 使用过程中如无反馈信息，请检查设备间电缆连接是否正常，报知设备是否已开机；\r\n\r\n2. 报知设备反馈信息无回看功能，用户执行操作时需认真观察反馈信息；\r\n\r\n3. 指挥基站信息为接收报险情报知设备进行报知险情的关键，此处需要用户二次确认，以保证地址准确无误；\r\n\r\n4. 如预置信息、岸基地址以及特殊编号都有格式要求，用户输入数据后维护设备软件仅对其格式进行判断，不判断内容；\r\n\r\n5. 此处假设维护设备的使用者是用户认可的，因此不对用户设置使用权限。\r\n\r\n",IDC_HELP_STATIC,10,53,255,176
-    CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,72,7,130,8
-    LTEXT           "电量:--%",IDC_STATIC_POWER,217,7,51,8
+    CTEXT           "----/--/--  --:--:--",IDC_SYSTEM_TIME_STATIC,72,7,117,8
+    LTEXT           "电量:--%",IDC_STATIC_POWER,223,7,51,8
     GROUPBOX        "帮助信息",IDC_GROUP_STATIC,5,32,264,208
     CTEXT           "软件版本： 1.0    Copyright (C) 2017",IDC_VERSION,26,324,221,14
     PUSHBUTTON      "返回上一级",IDCANCEL,22,274,230,27
+    CONTROL         155,IDC_POWER_PIC_STATIC,"Static",SS_BITMAP,207,8,14,6
 END
 
 IDD_MESSAGE_DIALOG DIALOG  0, 0, 218, 93
@@ -413,15 +423,17 @@ END
 // Bitmap
 //
 
-IDB_EMPTY_BITMAP        BITMAP                  "img\\empty.bmp"
-IDB_FULL_BITMAP         BITMAP                  "img\\full.bmp"
-IDB_LESS_BITMAP         BITMAP                  "img\\less.bmp"
-IDB_MEDIA_BITMAP        BITMAP                  "img\\media.bmp"
-IDB_MORE_BITMAP         BITMAP                  "img\\more.bmp"
 IDB_CONNECT_BITMAP      BITMAP                  "img\\connect.bmp"
 IDB_DISCONNECT_BITMAP   BITMAP                  "img\\disconnect.bmp"
 IDB_WARNING_BITMAP      BITMAP                  "img\\warning2.bmp"
 IDB_SPLASH_BITMAP       BITMAP                  "img\\splash.bmp"
+IDB_CHARING_BITMAP      BITMAP                  "img\\bitmap4.bmp"
+IDB_MORE_BITMAP         BITMAP                  "img\\full_bit.bmp"
+IDB_MEDIA_BITMAP        BITMAP                  "img\\more_bit.bmp"
+IDB_LESS_BITMAP         BITMAP                  "img\\media_bi.bmp"
+IDB_EMPTY_BITMAP        BITMAP                  "img\\less_bit.bmp"
+IDB_POWER_BITMAP        BITMAP                  "img\\bmp00002.bmp"
+IDB_FULL_BITMAP         BITMAP                  "img\\charing_.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

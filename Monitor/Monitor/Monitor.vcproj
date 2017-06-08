@@ -578,6 +578,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\img\bitmap4.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\img\bmp00001.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\img\bmp00002.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\img\charing_.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\img\connect.bmp"
 				>
 			</File>
@@ -594,11 +610,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\img\full_bit.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\img\less.bmp"
 				>
 			</File>
 			<File
+				RelativePath=".\img\less_bit.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\img\media.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\img\media_bi.bmp"
 				>
 			</File>
 			<File
@@ -615,6 +643,10 @@
 			</File>
 			<File
 				RelativePath=".\img\more.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\img\more_bit.bmp"
 				>
 			</File>
 			<File

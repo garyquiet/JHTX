@@ -14,11 +14,6 @@
 #define IDD_L1_XTSZ_DIALOG              110
 #define IDD_L2_XTSZ_HELP_VERSION_DIALOG 111
 #define IDR_MAINFRAME                   128
-#define IDB_EMPTY_BITMAP                129
-#define IDB_FULL_BITMAP                 130
-#define IDB_LESS_BITMAP                 131
-#define IDB_MEDIA_BITMAP                132
-#define IDB_MORE_BITMAP                 133
 #define IDB_CONNECT_BITMAP              134
 #define IDB_DISCONNECT_BITMAP           135
 #define IDB_BITMAP2                     141
@@ -27,6 +22,14 @@
 #define IDB_WARNING_BITMAP              146
 #define IDB_BITMAP3                     147
 #define IDB_SPLASH_BITMAP               147
+#define IDB_CHARING_BITMAP              148
+#define IDB_MORE_BITMAP                 149
+#define IDB_MEDIA_BITMAP                150
+#define IDB_LESS_BITMAP                 151
+#define IDB_EMPTY_BITMAP                152
+#define IDB_POWER_BITMAP                154
+#define IDB_CHARING_BITMAP1             155
+#define IDB_FULL_BITMAP                 155
 #define IDC_PRESET_INFO_BUTTON          1001
 #define IDC_SYSTEM_TIME_STATIC          1009
 #define IDC_SPECIAL_CODE_BUTTON         1010
@@ -87,15 +90,16 @@
 #define IDC_OPERATE_GROUP_STATIC        1058
 #define IDC_PIC_STATIC                  1059
 #define IDC_INFO_STATIC                 1060
+#define IDC_POWER_PIC_STATIC            1061
 #define IDC_RESULT_STUTAS_STATIC        65535
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1061
+#define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
