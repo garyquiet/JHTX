@@ -43,6 +43,24 @@ int CProtocolPkg::search(CString source, CString ch){
 	return -1;
 }
 
+//查找字符
+int CProtocolPkg::search(CString source, CString ch, int start){
+
+	for (int i = start; i < source.GetLength(); ++i)
+	{
+		TCHAR tc = source.GetAt(i);
+		CString tmp = L"";
+		tmp.Format(L"%c", tc);
+
+		if( ch == tmp ){
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+
 
 //创建预置信息报文
 CString CProtocolPkg::CreatePRCFGPacket(CString cmd, CString cfgID, CString msgID, CString data){
@@ -239,8 +257,17 @@ CString CProtocolPkg::ParseMOD(CString content){
 
 	*/
 	CString str = L"";
-	int begin = search(content, L"“");
-	int end = search(content, L"”");
+	int begin = -1, end = -1;
+	
+	begin = search(content, L"“");
+	if(begin == -1){
+		begin = search(content, L"\"");
+		end = search(content, L"\"", begin + 1);
+	}
+	else{
+		end = search(content, L"”");
+	}
+
 	CString info = content.Mid(begin + 1, end - begin - 1);
 	str = info;
 

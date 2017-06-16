@@ -307,13 +307,21 @@ void CMonitorDlg::ShowBatteryPower(){
 	if(dwLen != 0){
 		if(spsCurrent.ACLineStatus == AC_LINE_ONLINE)
 		{
-			if(spsCurrent.BatteryLifePercent != 100)
+			if(spsCurrent.BatteryLifePercent < 100)
 			{
 
 				// 正在充电
 				//SetPowerStepBmp(200);
 				//MessageBox(_T("充电..."));
-				str.Format(L"充电:%d%%", spsCurrent.BatteryLifePercent);
+				if (spsCurrent.BatteryLifePercent <= 100)
+				{
+					str.Format(L"充电:%d%%", spsCurrent.BatteryLifePercent);
+				}
+				else
+				{
+					str.Format(L"充电:%d%%", 100);
+				}
+				
 				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 
 				//从资源中加载图片
@@ -335,7 +343,15 @@ void CMonitorDlg::ShowBatteryPower(){
 			{
 				// 充电结束
 				//SetPowerStepBmp(300);
-				str.Format(L"电源:%d%%", spsCurrent.BatteryLifePercent);
+				if (spsCurrent.BatteryLifePercent <= 100)
+				{
+					str.Format(L"电源:%d%%", spsCurrent.BatteryLifePercent);
+				}
+				else
+				{
+					str.Format(L"电源:%d%%", 100);
+				}
+				
 				((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 
 				//从资源中加载图片
@@ -358,7 +374,16 @@ void CMonitorDlg::ShowBatteryPower(){
 		else
 		{
 			//MessageBox(_T("直流电"));
-			str.Format(L"电池:%d%%",spsCurrent.BatteryLifePercent);
+
+			if (spsCurrent.BatteryLifePercent <= 100)
+			{
+				str.Format(L"电池:%d%%",spsCurrent.BatteryLifePercent);
+			}
+			else
+			{
+				str.Format(L"电池:%d%%",100);
+			}
+			
 			((CStatic*)GetDlgItem(IDC_STATIC_POWER))->SetWindowText(str);
 
 			if (spsCurrent.BatteryLifePercent >= 100)

@@ -36,6 +36,9 @@ public:
 	//²éÕÒ×Ö·û
 	static int search(CString source, CString ch); 
 
+	//²éÕÒ×Ö·û
+	static int search(CString source, CString ch, int start);
+
 
 	//·Ö¸î×Ö·û´®
 	static vector<CString> SplitString(CString strSource, CString split);
