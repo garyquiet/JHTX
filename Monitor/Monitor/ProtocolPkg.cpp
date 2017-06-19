@@ -188,10 +188,12 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 		{
 			//int begin = content.Find("第");
 			//int end = content.Find('”');
-			int begin = search(content, L"“");
+
+			/*int begin = search(content, L"“");
 			int end = search(content, L"”");
 			CString info = content.Mid(begin + 1, end - begin - 1);
-			str = info;
+			str = info;*/
+			str = content;
 		}
 		break;
 	case 2: //中心号码查询回执
@@ -199,15 +201,26 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 		{“上报基站：XXXXXXX”}
 		*/
 		{
-			/*int begin = content.Find('“');
-			int end = content.Find('”');*/
-			int begin = search(content,L"“");
+			
+			/*int begin = search(content,L"“");
 			int end = search(content, L"”");
-			CString info = content.Mid(begin + 1, end - begin - 1);
+			CString info = content.Mid(begin + 1, end - begin - 1);*/
+			
+			CString info = content;
 
-			//int index = info.Find('：');
 			int index = search(info, L"：");
-			str = info.Right(info.GetLength() - index - 1);
+			if (index == -1)
+			{
+				index = search(info, L":");
+				if (index != -1)
+				{
+					str = info.Right(info.GetLength() - index - 1);
+				}
+			}
+			else
+			{
+				str = info.Right(info.GetLength() - index - 1);
+			}
 		}
 		
 		break;
@@ -229,6 +242,11 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 
 //解析查询返回的预置信息
 map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
+	/*
+		{“01.(第1条预置信息)”}
+		{“02.(第2条预置信息)”}
+	*/
+
 	map<CString, CString> dic;
 	vector<CString> vs = SplitString(content, L"\r\n");
 
@@ -254,10 +272,12 @@ CString CProtocolPkg::ParseMOD(CString content){
 	/*
 	{“当前模式:xxxx”}
 	{“切换至:xxxxxx”}
-
 	*/
+
+
 	CString str = L"";
-	int begin = -1, end = -1;
+	
+	/*int begin = -1, end = -1;
 	
 	begin = search(content, L"“");
 	if(begin == -1){
@@ -269,7 +289,9 @@ CString CProtocolPkg::ParseMOD(CString content){
 	}
 
 	CString info = content.Mid(begin + 1, end - begin - 1);
-	str = info;
+	str = info;*/
+
+	str =  content;
 
 	return str;
 }
