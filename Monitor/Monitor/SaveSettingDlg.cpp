@@ -6,6 +6,7 @@
 #include "SaveSettingDlg.h"
 #include "ProtocolPkg.h"
 #include "MessageDlg.h"
+#include "AskDlg.h"
 
 // CSaveSettingDlg 对话框
 
@@ -338,47 +339,53 @@ void CSaveSettingDlg::OnBnClickedSetButton()
 	int index = m_combeSaveMethod.GetCurSel();
 	if (index != CB_ERR)
 	{
-		int method = index + 1;
-		DWORD len = 0;
-		switch(method)
-		{
-		case 1:
+		CAskDlg askDlg;
+		askDlg.m_info = L"确定要更改保存方式吗？";
+		if(IDOK == askDlg.DoModal()){
+
+			int method = index + 1;
+			DWORD len = 0;
+			switch(method)
 			{
-				len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_1);
+			case 1:
+				{
+					len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_1);
+				}
+				break;;
+			case 2:
+				{
+					len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_2);
+				}
+				break;;
+			case 3:
+				{
+					len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_3);
+				}
+				break;;
+			case 4:
+				{
+					len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_4);
+				}
+				break;
+			default:
+				{
+					//MessageBox(L"参数错误!");
+					CMessageDlg dlg;
+					dlg.m_info = L"参数错误!";
+					dlg.DoModal();
+				}
+				break;
 			}
-			break;;
-		case 2:
+			
+			if (len > 0)
 			{
-				len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_2);
+				CString tip = L"存储命令发送成功!";
+				SetTipInfo(tip);
+			}else{
+				CString tip = L"存储命令发送失败!";
+				SetTipInfo(tip);
 			}
-			break;;
-		case 3:
-			{
-				len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_3);
-			}
-			break;;
-		case 4:
-			{
-				len = CProtocolPkg::SendSAVEPacket(SAVE,SAVE_CfgID_4);
-			}
-			break;
-		default:
-			{
-				//MessageBox(L"参数错误!");
-				CMessageDlg dlg;
-				dlg.m_info = L"参数错误!";
-				dlg.DoModal();
-			}
-			break;
-		}
-		
-		if (len > 0)
-		{
-			CString tip = L"存储命令发送成功!";
-			SetTipInfo(tip);
-		}else{
-			CString tip = L"存储命令发送失败!";
-			SetTipInfo(tip);
+
 		}
 	}
 	else{

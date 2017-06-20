@@ -6,6 +6,7 @@
 #include "WorkingModeDlg.h"
 #include "ProtocolPkg.h"
 #include "MessageDlg.h"
+#include "AskDlg.h"
 
 // CWorkingModeDlg 对话框
 
@@ -360,55 +361,63 @@ void CWorkingModeDlg::OnBnClickedQueryButton()
 void CWorkingModeDlg::OnBnClickedSetButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
+	
+
 	int index = m_comboWorkingMode.GetCurSel();
 	if (index != CB_ERR)
 	{
-		int method = index + 1;
-		DWORD len = 0;
-		switch(method)
-		{
-		case 1:
-			{
-				len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE1);
-			}
-			break;;
-		case 2:
-			{
-				len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE2);
-			}
-			break;;
-		case 3:
-			{
-				len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE3);
-			}
-			break;;
-		case 4:
-			{
-				len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE4);
-			}
-			break;
-		case 5:
-			{
-				len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE5);
-			}
-			break;
-		default:
-			{
-				//MessageBox(L"参数错误!");
-				CMessageDlg dlg;
-				dlg.m_info = L"参数错误!";
-				dlg.DoModal();
-			}
-			break;
-		}
+		CAskDlg askDlg;
+		askDlg.m_info = L"确定要切换当前工作模式吗？";
+		if(IDOK == askDlg.DoModal()){
 
-		if (len > 0)
-		{
-			CString tip = L"工作模式切换命令发送成功!";
-			SetTipInfo(tip);
-		}else{
-			CString tip = L"工作模式切换命令发送失败!";
-			SetTipInfo(tip);
+			int method = index + 1;
+			DWORD len = 0;
+			switch(method)
+			{
+			case 1:
+				{
+					len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE1);
+				}
+				break;;
+			case 2:
+				{
+					len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE2);
+				}
+				break;;
+			case 3:
+				{
+					len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE3);
+				}
+				break;;
+			case 4:
+				{
+					len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE4);
+				}
+				break;
+			case 5:
+				{
+					len = CProtocolPkg::SendMDCFGPacket(MDCFG,MDCFG_CfgID_MODE5);
+				}
+				break;
+			default:
+				{
+					//MessageBox(L"参数错误!");
+					CMessageDlg dlg;
+					dlg.m_info = L"参数错误!";
+					dlg.DoModal();
+				}
+				break;
+			}
+
+			if (len > 0)
+			{
+				CString tip = L"工作模式切换命令发送成功!";
+				SetTipInfo(tip);
+			}else{
+				CString tip = L"工作模式切换命令发送失败!";
+				SetTipInfo(tip);
+			}
 		}
 	}
 	else{

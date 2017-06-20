@@ -6,6 +6,7 @@
 #include "SystemSettingDlg.h"
 #include "MessageDlg.h"
 #include "HelpAndVersionDlg.h"
+#include "AskDlg.h"
 
 // CSystemSettingDlg 对话框
 
@@ -357,56 +358,61 @@ void CSystemSettingDlg::OnBnClickedSetButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
-	CTime curTime;
-	m_dateTimePicker.GetTime(curTime);
+	CAskDlg askDlg;
+	askDlg.m_info = L"确定要修改系统时间吗？";
+	if(IDOK == askDlg.DoModal()){
 
-	
-	/*curTime.GetHour();
-	curTime.GetMinute();
-	curTime.GetSecond();*/
+		CTime curTime;
+		m_dateTimePicker.GetTime(curTime);
 
-	CString strHour;
-	CString strMinute;
-	CString strSecond;
-	
-	int ret = m_comboHour.GetCurSel();
-	if (ret != CB_ERR)
-	{
-		m_comboHour.GetLBText(ret, strHour);
-	}
+		
+		/*curTime.GetHour();
+		curTime.GetMinute();
+		curTime.GetSecond();*/
 
-	ret = m_comboMinute.GetCurSel();
-	if (ret != CB_ERR)
-	{
-		m_comboMinute.GetLBText(ret, strMinute);
-	}
+		CString strHour;
+		CString strMinute;
+		CString strSecond;
+		
+		int ret = m_comboHour.GetCurSel();
+		if (ret != CB_ERR)
+		{
+			m_comboHour.GetLBText(ret, strHour);
+		}
 
-	ret = m_comboSecond.GetCurSel();
-	if (ret != CB_ERR)
-	{
-		m_comboSecond.GetLBText(ret, strSecond);
-	}
-	
+		ret = m_comboMinute.GetCurSel();
+		if (ret != CB_ERR)
+		{
+			m_comboMinute.GetLBText(ret, strMinute);
+		}
 
-	SYSTEMTIME st;
-	st.wYear = curTime.GetYear();
-	st.wMonth = curTime.GetMonth();
-	st.wDay = curTime.GetDay();
-	st.wHour = _ttoi(strHour);
-	st.wMinute = _ttoi(strMinute);
-	st.wSecond = _ttoi(strSecond);
+		ret = m_comboSecond.GetCurSel();
+		if (ret != CB_ERR)
+		{
+			m_comboSecond.GetLBText(ret, strSecond);
+		}
+		
 
-	if(FALSE == SetLocalTime(&st)){
-		//MessageBox(L"设置失败!");
-		CMessageDlg dlg;
-		dlg.m_info = L"设置失败!";
-		dlg.DoModal();
-	}
-	else{
-		//MessageBox(L"设置成功!");
-		CMessageDlg dlg;
-		dlg.m_info = L"设置成功!";
-		dlg.DoModal();
+		SYSTEMTIME st;
+		st.wYear = curTime.GetYear();
+		st.wMonth = curTime.GetMonth();
+		st.wDay = curTime.GetDay();
+		st.wHour = _ttoi(strHour);
+		st.wMinute = _ttoi(strMinute);
+		st.wSecond = _ttoi(strSecond);
+
+		if(FALSE == SetLocalTime(&st)){
+			//MessageBox(L"设置失败!");
+			CMessageDlg dlg;
+			dlg.m_info = L"设置失败!";
+			dlg.DoModal();
+		}
+		else{
+			//MessageBox(L"设置成功!");
+			CMessageDlg dlg;
+			dlg.m_info = L"设置成功!";
+			dlg.DoModal();
+		}
 	}
 }
 

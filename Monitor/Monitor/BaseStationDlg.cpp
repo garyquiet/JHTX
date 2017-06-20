@@ -6,6 +6,7 @@
 #include "BaseStationDlg.h"
 #include "MessageDlg.h"
 #include "ProtocolPkg.h"
+#include "AskDlg.h"
 
 // CBaseStationDlg 对话框
 
@@ -371,16 +372,21 @@ void CBaseStationDlg::OnBnClickedSetButton()
 	{
 		if (m_strBaseCenterNo.Trim() == m_strBaseCenterNoRepeat.Trim())
 		{
-			DWORD len = CProtocolPkg::SendIDCFGPacket(IDCFG, IDCFG_CfgID_SET, m_strBaseCenterNo.Trim());
+			CAskDlg askDlg;
+			askDlg.m_info = L"确定要设置指挥基站中心号码吗？";
+			if(IDOK == askDlg.DoModal()){
 
-			if (len > 0)
-			{
-				CString tip = L"设置基站中心号码命令发送成功";
-				SetTipInfo(tip);
-			}
-			else{
-				CString tip = L"设置基站中心号码命令发送失败";
-				SetTipInfo(tip);
+				DWORD len = CProtocolPkg::SendIDCFGPacket(IDCFG, IDCFG_CfgID_SET, m_strBaseCenterNo.Trim());
+
+				if (len > 0)
+				{
+					CString tip = L"设置基站中心号码命令发送成功";
+					SetTipInfo(tip);
+				}
+				else{
+					CString tip = L"设置基站中心号码命令发送失败";
+					SetTipInfo(tip);
+				}
 			}
 		}
 		else{

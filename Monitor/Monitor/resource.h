@@ -2,6 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Monitor.rc
 //
+#define IDC                             2
 #define IDD_MONITOR_DIALOG              102
 #define IDD_HOME_DIALOG                 102
 #define IDD_L1_YZXX_DIALOG              103
@@ -18,6 +19,7 @@
 #define IDB_DISCONNECT_BITMAP           135
 #define IDB_BITMAP2                     141
 #define IDD_MESSAGE_DIALOG              142
+#define IDD_QUESTION_DIALOG             143
 #define IDB_BITMAP1                     146
 #define IDB_WARNING_BITMAP              146
 #define IDB_BITMAP3                     147
@@ -27,6 +29,7 @@
 #define IDB_MEDIA_BITMAP                150
 #define IDB_LESS_BITMAP                 151
 #define IDB_EMPTY_BITMAP                152
+#define IDB_QUESTION_BITMAP             153
 #define IDB_POWER_BITMAP                154
 #define IDB_CHARING_BITMAP1             155
 #define IDB_FULL_BITMAP                 155
@@ -97,7 +100,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        149
+#define _APS_NEXT_RESOURCE_VALUE        154
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           101

@@ -178,12 +178,12 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 	{
 	case 1://一般信息回执
 		/*
-		{“设置成功!”}
-		{“设置失败!”}
-		{“保存成功!”}
-		{“初始化成功!”}
-		{“预置信息空!”}
-		{“信息格式错误!”}
+		设置成功!
+		设置失败!
+		保存成功!
+		初始化成功!
+		预置信息空!
+		信息格式错误!
 		*/
 		{
 			//int begin = content.Find("第");
@@ -198,7 +198,7 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 		break;
 	case 2: //中心号码查询回执
 		/*
-		{“上报基站：XXXXXXX”}
+		上报基站：XXXXXXX
 		*/
 		{
 			
@@ -226,8 +226,8 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 		break;
 	case 3:
 		/*
-		{“01.(第1条预置信息)”}
-		{“02.(第2条预置信息)”}
+		01.第1条预置信息
+		02.第2条预置信息
 		*/
 		{
 
@@ -243,8 +243,8 @@ CString CProtocolPkg::ParseANS(int type, CString content){
 //解析查询返回的预置信息
 map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
 	/*
-		{“01.(第1条预置信息)”}
-		{“02.(第2条预置信息)”}
+		01.第1条预置信息
+		02.第2条预置信息
 	*/
 
 	map<CString, CString> dic;
@@ -257,9 +257,12 @@ map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
 
 		/*int begin = (*it).Find('(');
 		int end = (*it).Find(')');*/
-		int begin = search((*it), L"(");
-		int end = search((*it), L")");
-		CString info = (*it).Mid(begin + 1, end - begin - 1);
+		
+		//int begin = search((*it), L"(");
+		//int end = search((*it), L")");
+
+		int end = (*it).GetLength();
+		CString info = (*it).Mid(index + 1, end - index - 1);
 
 		dic.insert(map<CString, CString>::value_type(no, info));
 	}
@@ -270,8 +273,8 @@ map<CString,CString> CProtocolPkg::ParsePresetInfo(CString content){
 //解析模式报告
 CString CProtocolPkg::ParseMOD(CString content){
 	/*
-	{“当前模式:xxxx”}
-	{“切换至:xxxxxx”}
+	当前模式:xxxx
+	切换至:xxxxxx
 	*/
 
 

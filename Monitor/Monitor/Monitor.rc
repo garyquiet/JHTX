@@ -280,6 +280,17 @@ BEGIN
     CONTROL         146,IDC_PIC_STATIC,"Static",SS_BITMAP,19,18,32,30
 END
 
+IDD_QUESTION_DIALOG DIALOG  0, 0, 218, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "确认框"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "是",IDOK,66,63,69,23
+    LTEXT           "静态",IDC_INFO_STATIC,83,23,103,23
+    CONTROL         153,IDC_PIC_STATIC,"Static",SS_BITMAP,19,18,32,30
+    PUSHBUTTON      "否",IDCANCEL,142,63,69,23
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -414,6 +425,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 86
     END
+
+    IDD_QUESTION_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 86
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -434,6 +453,7 @@ IDB_LESS_BITMAP         BITMAP                  "img\\media_bi.bmp"
 IDB_EMPTY_BITMAP        BITMAP                  "img\\less_bit.bmp"
 IDB_POWER_BITMAP        BITMAP                  "img\\bmp00002.bmp"
 IDB_FULL_BITMAP         BITMAP                  "img\\charing_.bmp"
+IDB_QUESTION_BITMAP     BITMAP                  "img\\question.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -6,6 +6,7 @@
 #include "SpecialCodeDlg.h"
 #include "ProtocolPkg.h"
 #include "MessageDlg.h"
+#include "AskDlg.h"
 
 // CSpecialCodeDlg 对话框
 
@@ -372,16 +373,21 @@ void CSpecialCodeDlg::OnBnClickedSetButton()
 		if(m_strSpecialCode.Trim() == m_strSpecialCodeRepeat.Trim())
 		{
 
-			DWORD len = CProtocolPkg::SendSNCFGPacket(SNCFG, SNCFG_CfgID_SET, m_strSpecialCode.Trim());
+			CAskDlg askDlg;
+			askDlg.m_info = L"确定要设置当前特殊编号号码吗？";
+			if(IDOK == askDlg.DoModal()){
 
-			if (len > 0)
-			{
-				CString tip = L"设置特殊编号命令发送成功!";
-				SetTipInfo(tip);
-			}
-			else{
-				CString tip = L"设置特殊编号命令发送失败!";
-				SetTipInfo(tip);
+				DWORD len = CProtocolPkg::SendSNCFGPacket(SNCFG, SNCFG_CfgID_SET, m_strSpecialCode.Trim());
+
+				if (len > 0)
+				{
+					CString tip = L"设置特殊编号命令发送成功!";
+					SetTipInfo(tip);
+				}
+				else{
+					CString tip = L"设置特殊编号命令发送失败!";
+					SetTipInfo(tip);
+				}
 			}
 		}
 		else{

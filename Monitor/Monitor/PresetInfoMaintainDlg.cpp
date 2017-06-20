@@ -6,7 +6,7 @@
 #include "PresetInfoDlg.h"
 #include "PresetInfoMaintainDlg.h"
 #include "ProtocolPkg.h"
-
+#include "AskDlg.h"
 #include "MessageDlg.h"
 
 // CPresetInfoMaintainDlg 对话框
@@ -354,6 +354,8 @@ void CPresetInfoMaintainDlg::OnTimer(UINT_PTR nIDEvent)
 void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	
+	
 	if(TRUE == UpdateData(TRUE))
 	{
 		if (m_iPresetInfoNoForModify < 1 || m_iPresetInfoNoForModify > 30)
@@ -365,17 +367,21 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 		}
 		if (m_strPresetInfoForModify.Trim().GetLength() > 0)
 		{
+			CAskDlg askDlg;
+			askDlg.m_info = L"确定要增加预置信息吗？";
+			if(IDOK == askDlg.DoModal()){
 
-			DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForModify.Trim());
+				DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_ADD, ANY, m_strPresetInfoForModify.Trim());
 
-			if (len > 0)
-			{
-				CString tip = L"预置信息增加命令发送成功!";
-				SetTipInfo(tip);
-			}
-			else{
-				CString tip = L"预置信息增加命令发送失败!";
-				SetTipInfo(tip);
+				if (len > 0)
+				{
+					CString tip = L"预置信息增加命令发送成功!";
+					SetTipInfo(tip);
+				}
+				else{
+					CString tip = L"预置信息增加命令发送失败!";
+					SetTipInfo(tip);
+				}
 			}
 		}
 		else{
@@ -385,6 +391,7 @@ void CPresetInfoMaintainDlg::OnBnClickedAddButton()
 			dlg.DoModal();
 		}
 	}
+	
 }
 
 void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForAdd()
@@ -467,22 +474,28 @@ void CPresetInfoMaintainDlg::OnEnChangeInfoContentEditForModify()
 void CPresetInfoMaintainDlg::OnBnClickedModifyButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
 	if(TRUE == UpdateData(TRUE)){
 
 		if (m_strPresetInfoForModify.Trim().GetLength() > 0)
 		{
-			CString tmp = L"";
-			tmp.Format(L"%d", m_iPresetInfoNoForModify);
-			DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_MODIFY, tmp, m_strPresetInfoForModify.Trim());
+			CAskDlg askDlg;
+			askDlg.m_info = L"确定要修改预置信息吗？";
+			if(IDOK == askDlg.DoModal()){
 
-			if (len > 0)
-			{
-				CString tip = L"预置信息覆盖命令发送成功!";
-				SetTipInfo(tip);
-			}
-			else{
-				CString tip = L"预置信息覆盖命令发送失败!";
-				SetTipInfo(tip);
+				CString tmp = L"";
+				tmp.Format(L"%d", m_iPresetInfoNoForModify);
+				DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_MODIFY, tmp, m_strPresetInfoForModify.Trim());
+
+				if (len > 0)
+				{
+					CString tip = L"预置信息覆盖命令发送成功!";
+					SetTipInfo(tip);
+				}
+				else{
+					CString tip = L"预置信息覆盖命令发送失败!";
+					SetTipInfo(tip);
+				}
 			}
 		}
 		else{
@@ -491,31 +504,36 @@ void CPresetInfoMaintainDlg::OnBnClickedModifyButton()
 			dlg.m_info = L"预置信息不能为空!";
 			dlg.DoModal();
 		}
-		
 	}
+		
+	
 }
 
 void CPresetInfoMaintainDlg::OnBnClickedDeleteButton()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
-	if(TRUE == UpdateData(TRUE)){
+	CAskDlg askDlg;
+	askDlg.m_info = L"确定要删除预置信息吗？";
+	if(IDOK == askDlg.DoModal()){
 
-		CString tmp = L"";
-		tmp.Format(L"%d", m_iPresetInfoNoForModify);
-		DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_DELETE, tmp, ANY);
+		if(TRUE == UpdateData(TRUE)){
 
-		if (len > 0)
-		{
-			CString tip = L"预置信息删除命令发送成功!";
-			SetTipInfo(tip);
-		}
-		else{
-			CString tip = L"预置信息删除命令发送失败!";
-			SetTipInfo(tip);
+			CString tmp = L"";
+			tmp.Format(L"%d", m_iPresetInfoNoForModify);
+			DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_DELETE, tmp, ANY);
+
+			if (len > 0)
+			{
+				CString tip = L"预置信息删除命令发送成功!";
+				SetTipInfo(tip);
+			}
+			else{
+				CString tip = L"预置信息删除命令发送失败!";
+				SetTipInfo(tip);
+			}
 		}
 	}
-	
 }
 
 void CPresetInfoMaintainDlg::OnEnSetfocusInfoContentEditForAdd()
