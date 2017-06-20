@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by Monitor.rc
 //
-#define IDC                             2
 #define IDD_MONITOR_DIALOG              102
 #define IDD_HOME_DIALOG                 102
 #define IDD_L1_YZXX_DIALOG              103
@@ -77,6 +76,7 @@
 #define IDC_NUMBER_REPEAT_EDIT          1042
 #define IDC_HELP_STATIC                 1043
 #define IDC_BUTTON1                     1044
+#define IDC_REQUERY_BUTTON              1044
 #define IDC_GROUP_STATIC                1045
 #define IDC_TIMECONTROL_LABEL_STATIC    1046
 #define IDC_TIP_STATIC                  1047

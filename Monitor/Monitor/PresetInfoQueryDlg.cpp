@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(CPresetInfoQueryDlg, CDialog)
 	ON_MESSAGE(ON_COM_RECEIVE, OnComRecv)
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_REQUERY_BUTTON, &CPresetInfoQueryDlg::OnBnClickedRequeryButton)
 END_MESSAGE_MAP()
 
 
@@ -323,10 +324,11 @@ LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 {
 	char buf[RCV_BUFFER_SIZE];
 	TCHAR sbuf[RCV_BUFFER_SIZE];
+	memset(buf, 0, sizeof(buf));
 	memset(sbuf, 0, sizeof(sbuf));
 	int len;
 
-	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE);
+	len = theApp.m_Com.Read(buf, RCV_BUFFER_SIZE,100);
 
 	mbstowcs(sbuf, buf, len);
 
@@ -334,16 +336,33 @@ LRESULT CPresetInfoQueryDlg::OnComRecv(WPARAM wParam, LPARAM lParam)
 	str += sbuf;
 	str += _T("\r\n");
 
-	map<CString, CString> dic = CProtocolPkg::ParsePresetInfo(str);
+	
+	if( wcsstr(str, L"预置信息空") ){
+		CTime tm = CTime::GetCurrentTime();
+		CString time = tm.Format(L"%H:%M:%S");
+		CString info = L"";
+		info.Format(L"%s  %s",time, L"预置信息空！");
+		SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
+	}
+	else{
 
-	m_listCtrl.DeleteAllItems();
-	int i = 0;
-	for(map<CString,CString>::iterator iter = dic.begin(); iter != dic.end(); ++iter)
-	{
+		map<CString, CString> dic = CProtocolPkg::ParsePresetInfo(str);
 
-		int nRow = m_listCtrl.InsertItem(i, iter->first);//插入行
-		m_listCtrl.SetItemText(nRow, 1, iter->second);//设置数据
-		++i;
+		m_listCtrl.DeleteAllItems();
+		int i = 0;
+		for(map<CString,CString>::iterator iter = dic.begin(); iter != dic.end(); ++iter)
+		{
+
+			int nRow = m_listCtrl.InsertItem(i, iter->first);//插入行
+			m_listCtrl.SetItemText(nRow, 1, iter->second);//设置数据
+			++i;
+		}
+
+		CTime tm = CTime::GetCurrentTime();
+		CString time = tm.Format(L"%H:%M:%S");
+		CString info = L"";
+		info.Format(L"%s  %s %d 条",time, L"预置信息", i);
+		SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
 	}
 
 	return 1;
@@ -406,4 +425,25 @@ void CPresetInfoQueryDlg::OnPaint()
 	CRect rect; 
 	GetClientRect(rect); 
 	dc.FillSolidRect(rect,RGB(0,0,0)); 
+}
+
+void CPresetInfoQueryDlg::OnBnClickedRequeryButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	DWORD len = CProtocolPkg::SendPRCFGPacket(PRCFG, PRCFG_CfgID_QUERY);
+
+	if(len > 0){
+		CTime tm = CTime::GetCurrentTime();
+		CString time = tm.Format(L"%H:%M:%S");
+		CString info = L"";
+		info.Format(L"%s  %s",time, L"预置信息查询命令发送成功！");
+		SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
+	}
+	else{
+		CTime tm = CTime::GetCurrentTime();
+		CString time = tm.Format(L"%H:%M:%S");
+		CString info = L"";
+		info.Format(L"%s  %s",time, L"预置信息查询命令发送失败！");
+		SetDlgItemText(IDC_COMPLETE_STUTAS_STATIC, info);
+	}
 }

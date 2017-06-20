@@ -41,4 +41,5 @@ public:
 	CListCtrl m_listCtrl;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnPaint();
+	afx_msg void OnBnClickedRequeryButton();
 };
